@@ -17,107 +17,357 @@ export default function NewPost() {
             marginBottom: '32px',
           }}
         >
-          Khám phá danh mục
+          Tin mới đăng
         </Typography.Title>
         <Row gutter={24}>
-          <Col span={6}>
-            <Image
-              src={
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1iHz2yTD3DJi2xVGLQEhRF8xkpwqrpZbtOQ&usqp=CAU'
-              }
-              alt="cgv"
-              preview={false}
-              style={{
-                borderRadius: '24px',
-                marginBottom: '16px',
-                display: 'block',
-                height: '160px',
-                width: '315px',
-              }}
-            />
+          <Col
+            span={8}
+            style={{
+              marginBottom: '24px',
+            }}
+          >
+            <Row>
+              <Col
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  src={
+                    'https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/l/m/lm6_2x3_layout.jpg'
+                  }
+                  alt="cgv"
+                  style={{
+                    borderRadius: '24px',
+                    marginBottom: '16px',
+                    display: 'block',
+                    height: '160px',
+                  }}
+                />
+              </Col>
+            </Row>
+
             <Typography.Text
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '16px',
+              }}
+            >
+              Lật mặt 6
+            </Typography.Text>
+            <Typography.Text
+              type="danger"
               style={{
                 alignItems: 'center',
                 display: 'flex',
                 justifyContent: 'center',
               }}
             >
-              Vé xem phim
+              100.000 VND
             </Typography.Text>
           </Col>
-          <Col span={6}>
-            <Image
-              src={
-                'https://vff.org.vn/wp-content/uploads/2022/09/TICKET2-1.png'
-              }
-              alt="cgv"
-              preview={false}
-              style={{
-                borderRadius: '24px',
-                marginBottom: '16px',
-                display: 'block',
-                height: '160px',
-                width: '315px',
-              }}
-            />
+          <Col
+            span={8}
+            style={{
+              marginBottom: '24px',
+            }}
+          >
+            <Row>
+              <Col
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  src={
+                    'https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/l/m/lm6_2x3_layout.jpg'
+                  }
+                  alt="cgv"
+                  style={{
+                    borderRadius: '24px',
+                    marginBottom: '16px',
+                    display: 'block',
+                    height: '160px',
+                  }}
+                />
+              </Col>
+            </Row>
+
             <Typography.Text
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '16px',
+              }}
+            >
+              Lật mặt 6
+            </Typography.Text>
+            <Typography.Text
+              type="danger"
               style={{
                 alignItems: 'center',
                 display: 'flex',
                 justifyContent: 'center',
               }}
             >
-              Vé thể thao
+              100.000 VND
             </Typography.Text>
           </Col>
-          <Col span={6}>
-            <Image
-              src={
-                'https://sanvemaybay.vn/includes/uploads/2020/11/Kinh-nghi%E1%BB%87m-%C4%91%E1%BA%B7t-v%C3%A9-m%C3%A1y-bay-gi%C3%A1-r%E1%BA%BB.jpg'
-              }
-              alt="cgv"
-              preview={false}
-              style={{
-                borderRadius: '24px',
-                marginBottom: '16px',
-                display: 'block',
-                height: '160px',
-                width: '315px',
-              }}
-            />
+          <Col
+            span={8}
+            style={{
+              marginBottom: '24px',
+            }}
+          >
+            <Row>
+              <Col
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  src={
+                    'https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/l/m/lm6_2x3_layout.jpg'
+                  }
+                  alt="cgv"
+                  style={{
+                    borderRadius: '24px',
+                    marginBottom: '16px',
+                    display: 'block',
+                    height: '160px',
+                  }}
+                />
+              </Col>
+            </Row>
+
             <Typography.Text
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '16px',
+              }}
+            >
+              Lật mặt 6
+            </Typography.Text>
+            <Typography.Text
+              type="danger"
               style={{
                 alignItems: 'center',
                 display: 'flex',
                 justifyContent: 'center',
               }}
             >
-              Vé phương tiện đi lại
+              100.000 VND
             </Typography.Text>
           </Col>
-          <Col span={6}>
-            <Image
-              src={
-                'https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/1/9/1136231/Amsterdam-7C.jpeg'
-              }
-              alt="cgv"
-              preview={false}
-              style={{
-                borderRadius: '24px',
-                marginBottom: '16px',
-                display: 'block',
-                height: '160px',
-                width: '315px',
-              }}
-            />
+          <Col
+            span={8}
+            style={{
+              marginBottom: '24px',
+            }}
+          >
+            <Row>
+              <Col
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  src={
+                    'https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/l/m/lm6_2x3_layout.jpg'
+                  }
+                  alt="cgv"
+                  style={{
+                    borderRadius: '24px',
+                    marginBottom: '16px',
+                    display: 'block',
+                    height: '160px',
+                  }}
+                />
+              </Col>
+            </Row>
+
             <Typography.Text
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '16px',
+              }}
+            >
+              Lật mặt 6
+            </Typography.Text>
+            <Typography.Text
+              type="danger"
               style={{
                 alignItems: 'center',
                 display: 'flex',
                 justifyContent: 'center',
               }}
             >
-              Vé xem Concert/LiveShow
+              100.000 VND
+            </Typography.Text>
+          </Col>
+          <Col
+            span={8}
+            style={{
+              marginBottom: '24px',
+            }}
+          >
+            <Row>
+              <Col
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  src={
+                    'https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/l/m/lm6_2x3_layout.jpg'
+                  }
+                  alt="cgv"
+                  style={{
+                    borderRadius: '24px',
+                    marginBottom: '16px',
+                    display: 'block',
+                    height: '160px',
+                  }}
+                />
+              </Col>
+            </Row>
+
+            <Typography.Text
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '16px',
+              }}
+            >
+              Lật mặt 6
+            </Typography.Text>
+            <Typography.Text
+              type="danger"
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              100.000 VND
+            </Typography.Text>
+          </Col>
+          <Col
+            span={8}
+            style={{
+              marginBottom: '24px',
+            }}
+          >
+            <Row>
+              <Col
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  src={
+                    'https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/l/m/lm6_2x3_layout.jpg'
+                  }
+                  alt="cgv"
+                  style={{
+                    borderRadius: '24px',
+                    marginBottom: '16px',
+                    display: 'block',
+                    height: '160px',
+                  }}
+                />
+              </Col>
+            </Row>
+
+            <Typography.Text
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '16px',
+              }}
+            >
+              Lật mặt 6
+            </Typography.Text>
+            <Typography.Text
+              type="danger"
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              100.000 VND
+            </Typography.Text>
+          </Col>
+          <Col
+            span={8}
+            style={{
+              marginBottom: '24px',
+            }}
+          >
+            <Row>
+              <Col
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  src={
+                    'https://www.cgv.vn/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/l/m/lm6_2x3_layout.jpg'
+                  }
+                  alt="cgv"
+                  style={{
+                    borderRadius: '24px',
+                    marginBottom: '16px',
+                    display: 'block',
+                    height: '160px',
+                  }}
+                />
+              </Col>
+            </Row>
+
+            <Typography.Text
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '16px',
+              }}
+            >
+              Lật mặt 6
+            </Typography.Text>
+            <Typography.Text
+              type="danger"
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              100.000 VND
             </Typography.Text>
           </Col>
         </Row>
