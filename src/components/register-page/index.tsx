@@ -27,7 +27,7 @@ const initialValues: LoginData = {
   password: '',
 };
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [notiApi, contextHolder] = notification.useNotification();
@@ -85,7 +85,7 @@ export default function LoginPage() {
   };
 
   const handleChangePage = () => {
-    router.push('/register');
+    router.push('/login');
   };
 
   const changePageHome = () => {
@@ -104,21 +104,21 @@ export default function LoginPage() {
                 title: <a onClick={changePageHome}>Trang chủ</a>,
               },
               {
-                title: 'Đăng nhập',
+                title: 'Đăng ký',
               },
             ]}
           />
         </Col>
         <Col span={24} style={{ display: 'flex', justifyContent: 'center' }}>
-          <Card style={{ height: '580px', width: '545px' }}>
+          <Card style={{ height: '620px', width: '545px' }}>
             <Row style={{ marginBottom: '24px' }}>
               <Col span={16}>
                 <Row>
                   <Col span={24}>
-                    <Title level={3}>Đăng nhập</Title>
+                    <Title level={3}>Đăng ký</Title>
                   </Col>
                   <Col span={24}>
-                    <Text>Chào bạn quay lại</Text>
+                    <Text>Tạo tài khoản TickSwap ngay</Text>
                   </Col>
                 </Row>
               </Col>
@@ -140,9 +140,18 @@ export default function LoginPage() {
                   <Form.Item
                     name="username"
                     rules={[
+                      { required: true, message: 'Vui lòng nhập tên của bạn!' },
+                    ]}
+                  >
+                    <Input size="large" placeholder="Nhập tên của bạn" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="numberPhone"
+                    rules={[
                       {
                         required: true,
-                        message: 'Please input your username!',
+                        message: 'Vui lòng nhập số điện thoại của bạn!',
                       },
                     ]}
                   >
@@ -157,7 +166,7 @@ export default function LoginPage() {
                     rules={[
                       {
                         required: true,
-                        message: 'Please input your password!',
+                        message: 'Vui lòng nhập mật khẩu của bạn!',
                       },
                     ]}
                   >
@@ -182,7 +191,7 @@ export default function LoginPage() {
                       }}
                       htmlType="submit"
                     >
-                      Đăng nhập
+                      Đăng ký
                     </Button>
                   </Form.Item>
                 </Form>
@@ -196,11 +205,20 @@ export default function LoginPage() {
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginBottom: '16px',
+                  // padding: '0px 16px',
                 }}
               >
-                <Link href="https://ant.design" target="_blank">
-                  Bạn quên mật khẩu?
-                </Link>
+                Bằng việc Đăng ký, bạn đã đồng ý
+                <Link
+                  href="https://ant.design"
+                  target="_blank"
+                  style={{
+                    margin: '0 4px',
+                  }}
+                >
+                  Điều khoản sử dụng
+                </Link>{' '}
+                của TickSwap
               </Col>
               <Col
                 span={24}
@@ -242,7 +260,7 @@ export default function LoginPage() {
                   Bạn chưa có tài khoản?
                 </Text>{' '}
                 <Link onClick={handleChangePage} target="_blank">
-                  Đăng ký ngay
+                  Đăng nhập
                 </Link>
               </Col>
             </Row>

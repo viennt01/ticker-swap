@@ -1,4 +1,4 @@
-import L from '@/components/login-page/login-page';
+import RegisterPage from '@/components/register-page';
 import { Inter } from '@next/font/google';
 import Head from 'next/head';
 
@@ -8,10 +8,10 @@ function Login() {
   return (
     <>
       <Head>
-        <title>Ticker Swap | Login</title>
+        <title>Ticker Swap | Register</title>
       </Head>
       <main className={inter.className}>
-        <L />
+        <RegisterPage />
       </main>
     </>
   );

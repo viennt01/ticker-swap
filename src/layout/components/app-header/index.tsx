@@ -1,5 +1,14 @@
-import React, { useState } from 'react';
-import { Col, Layout, Row, Image, Button, TreeSelect, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import {
+  Col,
+  Layout,
+  Row,
+  Image,
+  Button,
+  TreeSelect,
+  Typography,
+  Dropdown,
+} from 'antd';
 import style from './index.module.scss';
 import {
   HomeOutlined,
@@ -9,9 +18,17 @@ import {
   CommentOutlined,
   BellOutlined,
   CalendarOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+  ContactsOutlined,
 } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { useRouter } from 'next/router';
+import { appLocalStorage } from '@/utils/localstorage';
+
 const { Header } = Layout;
 const { Text } = Typography;
+
 const treeData = [
   {
     value: 'Lật mặt',
@@ -30,12 +47,43 @@ const treeData = [
     title: 'Mắt biếc',
   },
 ];
+
 const AppHeader = () => {
+  const router = useRouter();
   const [value, setValue] = useState<string>();
+  const [idUser, setIdUser] = useState<string>();
 
   const onChange = (newValue: string) => {
     setValue(newValue);
   };
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push('/login');
+  };
+  const handleLogin = () => {
+    router.push('/login');
+  };
+  const handleRegister = () => {
+    router.push('/register');
+  };
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <div onClick={handleLogout}>
+          <LogoutOutlined
+            style={{ fontSize: '16px', color: 'red', marginRight: '8px' }}
+          />{' '}
+          <Text type="danger">Đăng xuất</Text>
+        </div>
+      ),
+    },
+  ];
+  useEffect(() => {
+    setIdUser(appLocalStorage.get('idUser'));
+  }, [idUser]);
+
   return (
     <Header className={style.appHeader}>
       <Row>
@@ -104,32 +152,69 @@ const AppHeader = () => {
                     Chat
                   </Button>
                 </Col>
-                <Col span={4}>
-                  <Button
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: '#E8CA2B',
-                      border: 'none',
-                    }}
-                  >
-                    <BellOutlined />
-                    Thông báo
-                  </Button>
-                </Col>
-                <Col span={4} style={{ backgroundColor: '#E8CA2B' }}>
-                  <Button
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: '#E8CA2B',
-                      border: 'none',
-                    }}
-                  >
-                    <UserOutlined />
-                    Tài khoản
-                  </Button>
-                </Col>
+                {idUser ? (
+                  <>
+                    <Col span={4}>
+                      <Button
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: '#E8CA2B',
+                          border: 'none',
+                        }}
+                      >
+                        <BellOutlined />
+                        Thông báo
+                      </Button>
+                    </Col>
+                    <Col span={4} style={{ backgroundColor: '#E8CA2B' }}>
+                      <Dropdown menu={{ items }} placement="bottomRight" arrow>
+                        <Button
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: '#E8CA2B',
+                            border: 'none',
+                          }}
+                        >
+                          <UserOutlined />
+                          Tài khoản
+                        </Button>
+                      </Dropdown>
+                    </Col>
+                  </>
+                ) : (
+                  <>
+                    <Col span={4}>
+                      <Button
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: '#E8CA2B',
+                          border: 'none',
+                        }}
+                        onClick={handleLogin}
+                      >
+                        <LoginOutlined />
+                        Đăng Nhập
+                      </Button>
+                    </Col>
+                    <Col span={4} style={{ backgroundColor: '#E8CA2B' }}>
+                      <Button
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          backgroundColor: '#E8CA2B',
+                          border: 'none',
+                        }}
+                        onClick={handleRegister}
+                      >
+                        <ContactsOutlined />
+                        Đăng ký
+                      </Button>
+                    </Col>
+                  </>
+                )}
               </Row>
             </Col>
           </Row>
