@@ -1,9 +1,16 @@
 import React from 'react';
 import { Card, Col, Row, Typography, Image } from 'antd';
+import { useRouter } from 'next/router';
 
 export default function Category() {
+  const router = useRouter();
+
+  const handleChangePageFilm = () => {
+    router.push('/ticker-film');
+  };
+
   return (
-    <div style={{ marginBottom: '64px' }}>
+    <div style={{ marginBottom: '64px', cursor: 'pointer' }}>
       <Card
         style={{
           width: '100%',
@@ -20,7 +27,7 @@ export default function Category() {
           Khám phá danh mục
         </Typography.Title>
         <Row gutter={24}>
-          <Col span={6}>
+          <Col span={6} onClick={handleChangePageFilm}>
             <Image
               src={
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1iHz2yTD3DJi2xVGLQEhRF8xkpwqrpZbtOQ&usqp=CAU'
