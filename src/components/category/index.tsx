@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 export default function Category() {
   const router = useRouter();
 
-  const handleChangePageFilm = () => {
-    router.push('/ticker-film');
+  const handleChangePage = (id: string) => {
+    router.push(id);
   };
 
   return (
@@ -27,7 +27,7 @@ export default function Category() {
           Khám phá danh mục
         </Typography.Title>
         <Row gutter={24}>
-          <Col span={6} onClick={handleChangePageFilm}>
+          <Col span={6} onClick={() => handleChangePage('/ticker-film')}>
             <Image
               src={
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1iHz2yTD3DJi2xVGLQEhRF8xkpwqrpZbtOQ&usqp=CAU'
@@ -52,7 +52,7 @@ export default function Category() {
               Vé xem phim
             </Typography.Text>
           </Col>
-          <Col span={6}>
+          <Col span={6} onClick={() => handleChangePage('/ticker-sport')}>
             <Image
               src={
                 'https://vff.org.vn/wp-content/uploads/2022/09/TICKET2-1.png'
@@ -77,7 +77,7 @@ export default function Category() {
               Vé thể thao
             </Typography.Text>
           </Col>
-          <Col span={6}>
+          <Col span={6} onClick={() => handleChangePage('/ticker-travel')}>
             <Image
               src={
                 'https://sanvemaybay.vn/includes/uploads/2020/11/Kinh-nghi%E1%BB%87m-%C4%91%E1%BA%B7t-v%C3%A9-m%C3%A1y-bay-gi%C3%A1-r%E1%BA%BB.jpg'
@@ -102,7 +102,7 @@ export default function Category() {
               Vé phương tiện đi lại
             </Typography.Text>
           </Col>
-          <Col span={6}>
+          <Col span={6} onClick={() => handleChangePage('/ticker-concert')}>
             <Image
               src={
                 'https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/1/9/1136231/Amsterdam-7C.jpeg'

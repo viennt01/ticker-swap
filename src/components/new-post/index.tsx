@@ -1,7 +1,13 @@
 import React from 'react';
 import { Card, Col, Row, Typography, Image } from 'antd';
+import { useRouter } from 'next/router';
 
 export default function NewPost() {
+  const router = useRouter();
+
+  const changePage = (id: string) => {
+    router.push(id);
+  };
   return (
     <div style={{ marginBottom: '64px' }}>
       <Card
@@ -50,11 +56,13 @@ export default function NewPost() {
             </Row>
 
             <Typography.Text
+              onClick={() => changePage('/ticker-film/1')}
               style={{
                 alignItems: 'center',
                 display: 'flex',
                 justifyContent: 'center',
                 marginBottom: '16px',
+                cursor: 'pointer',
               }}
             >
               Lật mặt 6

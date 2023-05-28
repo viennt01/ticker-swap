@@ -23,7 +23,7 @@ import { useState } from 'react';
 import React from 'react';
 import { ROUTERS } from '@/constant/router';
 
-export default function TickerFilmPage() {
+export default function TicketConcertPage() {
   const router = useRouter();
   const { Title, Text } = Typography;
 
@@ -152,13 +152,13 @@ export default function TickerFilmPage() {
                 title: <a onClick={changePageHome}>Trang chủ</a>,
               },
               {
-                title: 'Vé xem phim',
+                title: 'Vé xem Concert/LiveShow',
               },
             ]}
           />
         </Col>
         <Col span={24} style={{ marginBottom: '8px' }}>
-          <Title level={3}>Tìm kiếm nhanh vé xem phim</Title>
+          <Title level={3}>Tìm kiếm nhanh vé xem Concert/LiveShow</Title>
         </Col>
       </Row>
       <Row style={{ marginBottom: '24px' }}>
@@ -203,7 +203,7 @@ export default function TickerFilmPage() {
               ]}
             />
             <Select
-              defaultValue="vxp"
+              defaultValue="vtt"
               style={{ width: 220, marginRight: '16px' }}
               onChange={handleChange}
               options={[

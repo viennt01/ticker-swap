@@ -21,8 +21,9 @@ import {
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import React from 'react';
+import { ROUTERS } from '@/constant/router';
 
-export default function DetailTickerFilmPage() {
+export default function TicketSportPage() {
   const router = useRouter();
   const { Title, Text } = Typography;
 
@@ -48,19 +49,23 @@ export default function DetailTickerFilmPage() {
     console.log(`selected ${value}`);
   };
 
+  const changePageDetail = (id: string) => {
+    router.push(ROUTERS.DETAIL_TICKET_FILM(id));
+  };
+
   const formatter = (value: number | undefined) =>
     `${String(value).replace(/(.)(?=(\d{3})+$)/g, '$1,')} đ`;
 
   const data = [
     {
-      href: 'https://ant.design',
+      id: '1',
       title: `Lật mặt 6`,
       cost: '100.000',
       content:
         'Lật mặt 6 sẽ thuộc thể loại giật gân, tâm lý pha hành động, hài hước.',
     },
     {
-      href: 'https://ant.design',
+      id: '2',
       title: `Lật mặt 7`,
       cost: '100.000',
       content:
@@ -74,6 +79,7 @@ export default function DetailTickerFilmPage() {
         {text}
       </Space>
     );
+
     return (
       <>
         <List
@@ -102,7 +108,7 @@ export default function DetailTickerFilmPage() {
                 />,
                 <IconText
                   icon={EnvironmentOutlined}
-                  text="Thành phố Hồ Chí Minhs"
+                  text="Thành phố Hồ Chí Minh"
                   key="list-vertical-message"
                 />,
               ]}
@@ -114,7 +120,11 @@ export default function DetailTickerFilmPage() {
                 />
               }
             >
-              <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
+              <List.Item.Meta
+                title={
+                  <a onClick={() => changePageDetail(item.id)}>{item.title}</a>
+                }
+              />
               <Row>
                 <Col span={24}>{item.content}</Col>
                 <Col span={24} style={{}}>
@@ -142,13 +152,13 @@ export default function DetailTickerFilmPage() {
                 title: <a onClick={changePageHome}>Trang chủ</a>,
               },
               {
-                title: 'Vé xem phim',
+                title: 'Vé xem thể thao',
               },
             ]}
           />
         </Col>
         <Col span={24} style={{ marginBottom: '8px' }}>
-          <Title level={3}>Tìm kiếm nhanh vé xem phim</Title>
+          <Title level={3}>Tìm kiếm nhanh vé xem thể thao</Title>
         </Col>
       </Row>
       <Row style={{ marginBottom: '24px' }}>
@@ -193,7 +203,7 @@ export default function DetailTickerFilmPage() {
               ]}
             />
             <Select
-              defaultValue="vxp"
+              defaultValue="vtt"
               style={{ width: 220, marginRight: '16px' }}
               onChange={handleChange}
               options={[

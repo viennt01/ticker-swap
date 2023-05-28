@@ -67,6 +67,9 @@ const AppHeader = () => {
     router.push('/register');
   };
 
+  const handleHome = () => {
+    router.push('/');
+  };
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -94,7 +97,7 @@ const AppHeader = () => {
                 preview={false}
                 style={{ cursor: 'pointer', width: '75px', height: '53px' }}
                 src="/images/logo.png"
-                // onClick={() => router.push(ROUTERS.HOME)}
+                onClick={() => handleHome()}
                 alt="logo"
               />
             </Col>
@@ -108,6 +111,7 @@ const AppHeader = () => {
                       backgroundColor: '#E8CA2B',
                       border: 'none',
                     }}
+                    onClick={() => handleHome()}
                   >
                     <HomeOutlined />
                     Trang chủ
