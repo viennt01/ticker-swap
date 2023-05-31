@@ -70,6 +70,9 @@ const AppHeader = () => {
   const handleHome = () => {
     router.push('/');
   };
+  const handleChangePagePost = () => {
+    router.push('/post-ticket');
+  };
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -253,6 +256,7 @@ const AppHeader = () => {
                   backgroundColor: '#E8CA2B',
                   marginLeft: '32px',
                 }}
+                onClick={handleChangePagePost}
               >
                 <CalendarOutlined />
                 ĐĂNG TIN
