@@ -27,7 +27,18 @@ export default function Category() {
           Khám phá danh mục
         </Typography.Title>
         <Row gutter={24}>
-          <Col span={6} onClick={() => handleChangePage('/ticker-film')}>
+          <Col
+            span={24}
+            md={12}
+            lg={6}
+            onClick={() => handleChangePage('/ticker-film')}
+            style={{
+              display: 'grid',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '32px',
+            }}
+          >
             <Image
               src={
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1iHz2yTD3DJi2xVGLQEhRF8xkpwqrpZbtOQ&usqp=CAU'
@@ -39,7 +50,6 @@ export default function Category() {
                 marginBottom: '16px',
                 display: 'block',
                 height: '160px',
-                width: '315px',
               }}
             />
             <Typography.Text
@@ -52,7 +62,18 @@ export default function Category() {
               Vé xem phim
             </Typography.Text>
           </Col>
-          <Col span={6} onClick={() => handleChangePage('/ticker-sport')}>
+          <Col
+            span={24}
+            md={12}
+            lg={6}
+            onClick={() => handleChangePage('/ticker-sport')}
+            style={{
+              display: 'grid',
+              alignItems: 'center',
+              marginBottom: '32px',
+              justifyContent: 'center',
+            }}
+          >
             <Image
               src={
                 'https://vff.org.vn/wp-content/uploads/2022/09/TICKET2-1.png'
@@ -64,7 +85,6 @@ export default function Category() {
                 marginBottom: '16px',
                 display: 'block',
                 height: '160px',
-                width: '315px',
               }}
             />
             <Typography.Text
@@ -77,7 +97,18 @@ export default function Category() {
               Vé thể thao
             </Typography.Text>
           </Col>
-          <Col span={6} onClick={() => handleChangePage('/ticker-travel')}>
+          <Col
+            span={24}
+            lg={6}
+            md={12}
+            onClick={() => handleChangePage('/ticker-travel')}
+            style={{
+              display: 'grid',
+              alignItems: 'center',
+              marginBottom: '32px',
+              justifyContent: 'center',
+            }}
+          >
             <Image
               src={
                 'https://sanvemaybay.vn/includes/uploads/2020/11/Kinh-nghi%E1%BB%87m-%C4%91%E1%BA%B7t-v%C3%A9-m%C3%A1y-bay-gi%C3%A1-r%E1%BA%BB.jpg'
@@ -89,7 +120,6 @@ export default function Category() {
                 marginBottom: '16px',
                 display: 'block',
                 height: '160px',
-                width: '315px',
               }}
             />
             <Typography.Text
@@ -102,7 +132,18 @@ export default function Category() {
               Vé phương tiện đi lại
             </Typography.Text>
           </Col>
-          <Col span={6} onClick={() => handleChangePage('/ticker-concert')}>
+          <Col
+            span={24}
+            md={12}
+            lg={6}
+            onClick={() => handleChangePage('/ticker-concert')}
+            style={{
+              display: 'grid',
+              alignItems: 'center',
+              marginBottom: '32px',
+              justifyContent: 'center',
+            }}
+          >
             <Image
               src={
                 'https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2023/1/9/1136231/Amsterdam-7C.jpeg'
@@ -114,7 +155,6 @@ export default function Category() {
                 marginBottom: '16px',
                 display: 'block',
                 height: '160px',
-                width: '315px',
               }}
             />
             <Typography.Text
