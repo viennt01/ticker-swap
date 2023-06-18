@@ -1,7 +1,8 @@
-import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
-import { ROUTERS } from '@/constant/router';
-import { appLocalStorage } from '@/utils/localstorage';
+// import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+// import { ROUTERS } from '@/constant/router';
+// import { appLocalStorage } from '@/utils/localstorage';
 import { useRouter } from 'next/router';
+// import ImgCrop from 'antd-img-crop';
 import {
   Button,
   Form,
@@ -12,19 +13,27 @@ import {
   Col,
   Typography,
   Breadcrumb,
+  Upload,
+  // UploadFile,
+  // UploadProps,
 } from 'antd';
 import {
   FacebookOutlined,
   GoogleOutlined,
   AppleOutlined,
+  UploadOutlined,
 } from '@ant-design/icons';
-import { LoginData, login } from './fetcher';
-import { API_MESSAGE } from '@/constant/message';
-import { headers } from '@/fetcher/utils';
+import { LoginData } from './fetcher';
+// import { API_MESSAGE } from '@/constant/message';
+// import { headers } from '@/fetcher/utils';
 import { useState } from 'react';
-const initialValues: LoginData = {
-  username: '',
-  password: '',
+// import { RcFile } from 'antd/es/upload';
+const initialValues = {
+  UserName: '',
+  Password: '',
+  PhoneNumber: '',
+  FulName: '',
+  Address: '',
 };
 
 export default function RegisterPage() {
@@ -32,56 +41,90 @@ export default function RegisterPage() {
   const router = useRouter();
   const [notiApi, contextHolder] = notification.useNotification();
   const { Text, Title, Link } = Typography;
+  // const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const onFinish = (values: LoginData) => {
-    appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, '123');
-    router.push('/');
-    return;
     setIsLoading(true);
-    const data = {
-      username: values.username,
-      password: values.password,
-    };
-    login(data)
-      .then((res) => {
-        if (res.status) {
-          headers.setToken(res.data.accessToken);
-          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.accessToken);
-          router.push(ROUTERS.HOME);
-          setIsLoading(false);
-          return;
-        } else {
-          notiApi.error({
-            message: '',
-            description: res.message,
-            placement: 'topRight',
-            duration: 3,
-          });
-          setIsLoading(false);
-          return;
-        }
+    // if (fileList.length === 0) {
+    //   notiApi.error({
+    //     message: '',
+    //     description: 'Vui lòng thêm ảnh đại diện của bạn',
+    //     placement: 'topRight',
+    //     duration: 3,
+    //   });
+    //   return;
+    // }
+    // const data = {
+    //   UserName: values.UserName,
+    //   Password: values.Password,
+    //   PhoneNumber: values.PhoneNumber,
+    //   FulName: values.FulName,
+    //   File: fileList[0],
+    //   Address: values.Address,
+    // };
+    // console.log(fileList[0]);
+    // console.log('values.File[0]', values.File[0]);
+    const myHeaders = new Headers();
+    myHeaders.append('accept', '*/*');
+    myHeaders.append('Content-Type', 'multipart/form-data');
+    const formdata = new FormData();
+    formdata.append('File', values.File[0]);
+    formdata.append('UserName', values.UserName);
+    formdata.append('Password', values.Password);
+    formdata.append('PhoneNumber', values.PhoneNumber);
+    formdata.append('FulName', values.FulName);
+    formdata.append('Address', values.Address);
+
+    fetch('http://ticketswap.somee.com/api/User/Register', {
+      method: 'POST',
+      body: formdata,
+      headers: myHeaders,
+      redirect: 'follow',
+    })
+      .then((response) => response.text())
+      .then(() => {
+        notiApi.success({
+          message: '',
+          description: 'Tạo thành công',
+          placement: 'topRight',
+          duration: 3,
+        });
       })
-      .catch((err) => {
-        const res = JSON.parse(err.message);
-        if (!res.error_code) {
-          notiApi.error({
-            message: '',
-            description: res.message,
-            placement: 'topRight',
-            duration: 3,
-          });
-          setIsLoading(false);
-          return;
-        } else {
-          notiApi.error({
-            message: '',
-            description: API_MESSAGE.ERROR,
-            placement: 'topRight',
-            duration: 3,
-          });
-          setIsLoading(false);
-        }
-      });
+      .catch(() =>
+        notiApi.error({
+          message: '',
+          description: 'Tạo thất bại',
+          placement: 'topRight',
+          duration: 3,
+        })
+      );
+    // login(formdata)
+    //   .then((res) => {
+    //     console.log(res);
+    //     if (res.status) {
+    //       router.push(ROUTERS.LOGIN);
+    //       setIsLoading(false);
+    //       return;
+    //     } else {
+    //       notiApi.error({
+    //         message: '',
+    //         description: res.message,
+    //         placement: 'topRight',
+    //         duration: 3,
+    //       });
+    //       setIsLoading(false);
+    //       return;
+    //     }
+    //   })
+    //   .catch(() => {
+    //     notiApi.error({
+    //       message: '',
+    //       description: API_MESSAGE.ERROR,
+    //       placement: 'topRight',
+    //       duration: 3,
+    //     });
+    //     setIsLoading(false);
+    //   });
   };
 
   const handleChangePage = () => {
@@ -91,6 +134,25 @@ export default function RegisterPage() {
   const changePageHome = () => {
     router.push('/');
   };
+
+  // const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+  //   setFileList(newFileList);
+  // };
+
+  // const onPreview = async (file: UploadFile) => {
+  //   let src = file.url as string;
+  //   if (!src) {
+  //     src = await new Promise((resolve) => {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(file.originFileObj as RcFile);
+  //       reader.onload = () => resolve(reader.result as string);
+  //     });
+  //   }
+  //   const image = new Image();
+  //   image.src = src;
+  //   const imgWindow = window.open(src);
+  //   imgWindow?.document.write(image.outerHTML);
+  // };
 
   return (
     <>
@@ -110,7 +172,7 @@ export default function RegisterPage() {
           />
         </Col>
         <Col span={24} style={{ display: 'flex', justifyContent: 'center' }}>
-          <Card style={{ height: '620px', width: '545px' }}>
+          <Card style={{ height: '900px', width: '545px' }}>
             <Row style={{ marginBottom: '24px' }}>
               <Col span={16}>
                 <Row>
@@ -138,16 +200,22 @@ export default function RegisterPage() {
                   autoComplete="off"
                 >
                   <Form.Item
-                    name="username"
+                    name="FulName"
                     rules={[
-                      { required: true, message: 'Vui lòng nhập tên của bạn!' },
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập họ và tên của bạn!',
+                      },
                     ]}
                   >
-                    <Input size="large" placeholder="Nhập tên của bạn" />
+                    <Input
+                      size="large"
+                      placeholder="Nhập số họ và tên của bạn"
+                    />
                   </Form.Item>
 
                   <Form.Item
-                    name="numberPhone"
+                    name="PhoneNumber"
                     rules={[
                       {
                         required: true,
@@ -162,7 +230,59 @@ export default function RegisterPage() {
                   </Form.Item>
 
                   <Form.Item
-                    name="password"
+                    name="Address"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập địa chỉ của bạn!',
+                      },
+                    ]}
+                  >
+                    <Input size="large" placeholder="Nhập địa chỉ của bạn" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="File"
+                    label="Ảnh"
+                    valuePropName="fileList"
+                    getValueFromEvent={(e) => e.fileList}
+                    rules={[
+                      { required: true, message: 'Please upload a file' },
+                    ]}
+                  >
+                    {/* <ImgCrop rotationSlider>
+                      <Upload
+                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        listType="picture-card"
+                        fileList={fileList}
+                        onChange={onChange}
+                        onPreview={onPreview}
+                      >
+                        {fileList.length < 1 && <UploadOutlined />}
+                      </Upload>
+                    </ImgCrop> */}
+                    <Upload beforeUpload={() => false} multiple={false}>
+                      <Button icon={<UploadOutlined />}>Select File</Button>
+                    </Upload>
+                  </Form.Item>
+
+                  <Form.Item
+                    name="UserName"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập tên đăng nhập của bạn!',
+                      },
+                    ]}
+                  >
+                    <Input
+                      size="large"
+                      placeholder="Nhập tên đăng nhập của bạn"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="Password"
                     rules={[
                       {
                         required: true,

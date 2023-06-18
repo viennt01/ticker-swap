@@ -19,11 +19,9 @@ import {
   AppleOutlined,
 } from '@ant-design/icons';
 import { LoginData, login } from './fetcher';
-import { API_MESSAGE } from '@/constant/message';
-import { headers } from '@/fetcher/utils';
 import { useState } from 'react';
 const initialValues: LoginData = {
-  username: '',
+  userName: '',
   password: '',
 };
 
@@ -34,26 +32,30 @@ export default function LoginPage() {
   const { Text, Title, Link } = Typography;
 
   const onFinish = (values: LoginData) => {
-    appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, '123');
-    router.push('/');
-    return;
+    // appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, '123');
+    // router.push('/');
+    // return;
     setIsLoading(true);
     const data = {
-      username: values.username,
+      userName: values.userName,
       password: values.password,
     };
+    console.log(data);
+
     login(data)
       .then((res) => {
-        if (res.status) {
-          headers.setToken(res.data.accessToken);
-          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.accessToken);
+        if (res.message === 'Success') {
+          console.log(res);
+
+          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.roleId);
+          appLocalStorage.set(LOCAL_STORAGE_KEYS.USER_ID, res.data.userId);
           router.push(ROUTERS.HOME);
           setIsLoading(false);
           return;
         } else {
           notiApi.error({
             message: '',
-            description: res.message,
+            description: 'Đăng nhập không thành công',
             placement: 'topRight',
             duration: 3,
           });
@@ -61,26 +63,14 @@ export default function LoginPage() {
           return;
         }
       })
-      .catch((err) => {
-        const res = JSON.parse(err.message);
-        if (!res.error_code) {
-          notiApi.error({
-            message: '',
-            description: res.message,
-            placement: 'topRight',
-            duration: 3,
-          });
-          setIsLoading(false);
-          return;
-        } else {
-          notiApi.error({
-            message: '',
-            description: API_MESSAGE.ERROR,
-            placement: 'topRight',
-            duration: 3,
-          });
-          setIsLoading(false);
-        }
+      .catch(() => {
+        notiApi.error({
+          message: '',
+          description: 'Đăng nhập không thành công',
+          placement: 'topRight',
+          duration: 3,
+        });
+        setIsLoading(false);
       });
   };
 
@@ -138,11 +128,11 @@ export default function LoginPage() {
                   autoComplete="off"
                 >
                   <Form.Item
-                    name="username"
+                    name="userName"
                     rules={[
                       {
                         required: true,
-                        message: 'Please input your username!',
+                        message: 'Please input your userName!',
                       },
                     ]}
                   >

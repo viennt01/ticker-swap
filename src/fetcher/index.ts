@@ -20,7 +20,7 @@ interface CRUDProps<T> {
   timeout?: number;
 }
 
-const MS_TIMEOUT = 10000;
+const MS_TIMEOUT = 100000;
 const API_MAIN_GW = process.env.API_MAIN_GW;
 
 export const GATEWAY = {
@@ -111,6 +111,26 @@ export const postLogin =
         ...options,
         method: 'POST',
         body: JSON.stringify(data),
+      }),
+      timeout
+    );
+    return fetchResolver(fetchPromise);
+  };
+export const postNoHeader =
+  <T, R>({ data, options, gw, timeout }: CRUDProps<T>) =>
+  (url: string): Promise<R> => {
+    console.log(data);
+
+    const fetchPromise = requestWithTimeout(
+      fetch(`${getGateway(gw)}${url}`, {
+        // headers: {
+        //   Accept: 'text/plain',
+        //   'Content-Type': 'application/json-patch+json',
+        // },
+        ...options,
+        method: 'POST',
+        body: JSON.stringify(data),
+        // body: data,
       }),
       timeout
     );

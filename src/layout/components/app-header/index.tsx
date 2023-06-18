@@ -88,7 +88,7 @@ const AppHeader = () => {
   ];
   useEffect(() => {
     setIdUser(appLocalStorage.get('idUser'));
-  }, [idUser]);
+  }, [idUser, router]);
 
   return (
     <Header className={style.appHeader}>

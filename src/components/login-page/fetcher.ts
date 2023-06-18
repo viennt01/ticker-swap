@@ -2,12 +2,14 @@ import { postLogin, ResponseWithPayload } from '@/fetcher';
 import { API_AUTHENTICATE } from '@/fetcher/endpoint';
 
 export interface LoginData {
-  username: string;
+  userName: string;
   password: string;
 }
 export interface DataLogin {
-  accessToken: string;
-  refreshToken: string;
+  roleId: string;
+  userId: string;
+  status: boolean;
+  message: string;
 }
 
 export const login = (data: LoginData) => {
