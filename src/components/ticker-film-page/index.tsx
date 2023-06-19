@@ -11,6 +11,8 @@ import {
   Tabs,
   List,
   Space,
+  Spin,
+  // notification,
 } from 'antd';
 import {
   FilterOutlined,
@@ -19,12 +21,16 @@ import {
   FireOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import { ROUTERS } from '@/constant/router';
+import { DataTicket, login } from './fetcher';
+import { formatCurrency } from '@/utils/format';
 
 export default function TickerFilmPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<DataTicket[]>([]);
   const { Title, Text } = Typography;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,6 +53,22 @@ export default function TickerFilmPage() {
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
+    switch (value) {
+      case 'vxp':
+        router.push('/ticker-film');
+        return;
+      case 'vtt':
+        router.push('/ticker-sport');
+        return;
+      case 'vdl':
+        router.push('/ticker-travel');
+        return;
+      case 'vcl':
+        router.push('/ticker-concert');
+        return;
+      default:
+        router.push('/ticker-film');
+    }
   };
 
   const changePageDetail = (id: string) => {
@@ -56,22 +78,6 @@ export default function TickerFilmPage() {
   const formatter = (value: number | undefined) =>
     `${String(value).replace(/(.)(?=(\d{3})+$)/g, '$1,')} đ`;
 
-  const data = [
-    {
-      id: '1',
-      title: `Lật mặt 6`,
-      cost: '100.000',
-      content:
-        'Lật mặt 6 sẽ thuộc thể loại giật gân, tâm lý pha hành động, hài hước.',
-    },
-    {
-      id: '2',
-      title: `Lật mặt 7`,
-      cost: '100.000',
-      content:
-        'Lật mặt 6 sẽ thuộc thể loại giật gân, tâm lý pha hành động, hài hước.',
-    },
-  ];
   const listAll = () => {
     const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
       <Space>
@@ -82,65 +88,99 @@ export default function TickerFilmPage() {
 
     return (
       <>
-        <List
-          itemLayout="vertical"
-          size="large"
-          pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
-            pageSize: 10,
-          }}
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item
-              key={item.title}
-              actions={[
-                <IconText
-                  icon={FireOutlined}
-                  text="Bán chuyên"
-                  key="list-vertical-star-o"
-                />,
-                <IconText
-                  icon={RiseOutlined}
-                  text="Tin ưu tiên"
-                  key="list-vertical-like-o"
-                />,
-                <IconText
-                  icon={EnvironmentOutlined}
-                  text="Thành phố Hồ Chí Minh"
-                  key="list-vertical-message"
-                />,
-              ]}
-              extra={
-                <img
-                  width={272}
-                  alt="logo"
-                  src="https://www.cgv.vn/media/catalog/product/cache/1/image/1800x/71252117777b696995f01934522c402d/9/8/980x448__1_.jpg"
-                />
-              }
-            >
-              <List.Item.Meta
-                title={
-                  <a onClick={() => changePageDetail(item.id)}>{item.title}</a>
+        {loading ? (
+          <div
+            style={{
+              alignItems: 'center',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Spin />
+          </div>
+        ) : (
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              onChange: (page) => {
+                console.log(page);
+              },
+              pageSize: 10,
+            }}
+            dataSource={data}
+            renderItem={(item) => (
+              <List.Item
+                key={item.ticketId}
+                actions={[
+                  <IconText
+                    icon={FireOutlined}
+                    text="Bán chuyên"
+                    key="list-vertical-star-o"
+                  />,
+                  <IconText
+                    icon={RiseOutlined}
+                    text="Tin ưu tiên"
+                    key="list-vertical-like-o"
+                  />,
+                  <IconText
+                    icon={EnvironmentOutlined}
+                    text="Thành phố Hồ Chí Minh"
+                    key="list-vertical-message"
+                  />,
+                ]}
+                extra={
+                  <img
+                    width={272}
+                    alt="logo"
+                    src={`data:image/png;base64,${item.avatar}`}
+                  />
                 }
-              />
-              <Row>
-                <Col span={24}>{item.content}</Col>
-                <Col span={24} style={{}}>
-                  {
-                    <Text strong type="danger">
-                      {item.cost} đ
-                    </Text>
+              >
+                <List.Item.Meta
+                  title={
+                    <a
+                      onClick={() =>
+                        changePageDetail(item.ticketId as unknown as string)
+                      }
+                    >
+                      {item.ticketName}
+                    </a>
                   }
-                </Col>
-              </Row>
-            </List.Item>
-          )}
-        />
+                />
+                <Row>
+                  <Col span={24}>{item.description}</Col>
+                  <Col span={24} style={{ marginTop: '16px' }}>
+                    {
+                      <Text strong type="danger">
+                        {formatCurrency(item.price)}
+                      </Text>
+                    }
+                  </Col>
+                </Row>
+              </List.Item>
+            )}
+          />
+        )}
       </>
     );
   };
+  const fetchData = () => {
+    login(1)
+      .then((res) => {
+        if (res.status) {
+          setData(res.data);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log('err', err);
+        setLoading(false);
+      });
+  };
+  useEffect(() => {
+    fetchData();
+  }, [router]);
   return (
     <>
       <Row>

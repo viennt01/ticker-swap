@@ -1,17 +1,18 @@
 import { postLogin, ResponseWithPayload } from '@/fetcher';
-import { API_AUTHENTICATE } from '@/fetcher/endpoint';
-
-export interface LoginData {
-  username: string;
-  password: string;
+import { API_TICKET } from '@/fetcher/endpoint';
+export interface DataTicket {
+  ticketId: number;
+  ticketName: string;
+  ticketCode: string;
+  description: string;
+  quantity: number;
+  avatar: string;
+  price: number;
+  userId: number;
 }
-export interface DataLogin {
-  accessToken: string;
-  refreshToken: string;
-}
 
-export const login = (data: LoginData) => {
-  return postLogin<LoginData, ResponseWithPayload<DataLogin>>({ data })(
-    API_AUTHENTICATE.LOGIN
+export const login = (data: number) => {
+  return postLogin<number, ResponseWithPayload<DataTicket[]>>({ data })(
+    API_TICKET.GET_TICKET_BY_TYPE
   );
 };

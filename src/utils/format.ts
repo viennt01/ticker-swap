@@ -29,10 +29,10 @@ export const getAffiliateLink = (
   return `${domain}?${encodeURIComponent(`f=${feature}&code=${code}`)}`;
 };
 
-export function formatCurrency(amount: number) {
-  return new Intl.NumberFormat('en-US', {
+export function formatCurrency(number: number) {
+  const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
-    currencyDisplay: 'narrowSymbol',
-  }).format(amount);
+    currency: 'VND',
+  });
+  return formatter.format(number);
 }
