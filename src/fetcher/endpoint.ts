@@ -9,4 +9,5 @@ export const API_AUTHENTICATE = {
 
 export const API_TICKET = {
   GET_TICKET_BY_TYPE: '/Ticket/GetTicketByType',
+  GET_TICKET_BY_USER_ID: '/Ticket/GetTicketById',
 };
