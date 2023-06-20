@@ -8,21 +8,19 @@ import {
   Button,
   Select,
   Card,
-  Upload,
   InputNumber,
-  Modal,
-  UploadFile,
-  UploadProps,
+  DatePicker,
+  notification,
 } from 'antd';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-// import type { RcFile } from 'antd/es/upload';
-import { PlusOutlined } from '@ant-design/icons';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { appLocalStorage } from '@/utils/localstorage';
 
 export default function PostTicketPage() {
   const [isPersonal, setIsPersonal] = useState(true);
   const router = useRouter();
   const { Title, Text } = Typography;
+  const [idUser, setIdUser] = useState<any>();
   const changePageHome = () => {
     router.push('/');
   };
@@ -31,82 +29,92 @@ export default function PostTicketPage() {
     wrapperCol: { span: 24 },
   };
 
-  const getBase64 = (file: any): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
+  // const getBase64 = (file: any): Promise<string> =>
+  //   new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result as string);
+  //     reader.onerror = (error) => reject(error);
+  //   });
 
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState<UploadFile[]>([
-    // {
-    //   uid: '-1',
-    //   name: 'image.png',
-    //   status: 'done',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // },
-    // {
-    //   uid: '-2',
-    //   name: 'image.png',
-    //   status: 'done',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // },
-    // {
-    //   uid: '-3',
-    //   name: 'image.png',
-    //   status: 'done',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // },
-    // {
-    //   uid: '-4',
-    //   name: 'image.png',
-    //   status: 'done',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // },
-    // {
-    //   uid: '-xxx',
-    //   percent: 50,
-    //   name: 'image.png',
-    //   status: 'uploading',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // },
-    // {
-    //   uid: '-5',
-    //   name: 'image.png',
-    //   status: 'error',
-    // },
-  ]);
+  // const [previewOpen, setPreviewOpen] = useState(false);
+  // const [previewImage, setPreviewImage] = useState('');
+  // const [previewTitle, setPreviewTitle] = useState('');
+  // const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-  const handleCancel = () => setPreviewOpen(false);
+  // const handleCancel = () => setPreviewOpen(false);
+  const [notiApi, contextHolder] = notification.useNotification();
+  const [dataImage, setDataImage] = useState<any>('');
 
-  const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as any);
-    }
+  // const handlePreview = async (file: UploadFile) => {
+  //   if (!file.url && !file.preview) {
+  //     file.preview = await getBase64(file.originFileObj as any);
+  //   }
 
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1)
-    );
-  };
+  //   setPreviewImage(file.url || (file.preview as string));
+  //   setPreviewOpen(true);
+  //   setPreviewTitle(
+  //     file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1)
+  //   );
+  // };
 
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
-    setFileList(newFileList);
+  // const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
+  //   setFileList(newFileList);
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
+  // const uploadButton = (
+  //   <div>
+  //     <PlusOutlined />
+  //     <div style={{ marginTop: 8 }}>Upload</div>
+  //   </div>
+  // );
 
   const onFinish = (values: any) => {
-    console.log(values);
+    const dataTimeUse = `${values.ticket.TimeUse['$y']}-${
+      values.ticket.TimeUse['$M'] + 1
+    }-${values.ticket.TimeUse['$D']}T${values.ticket.TimeUse['$H']}:${
+      values.ticket.TimeUse['$m']
+    }:${values.ticket.TimeUse['$s']}.${values.ticket.TimeUse['$ms']}`;
+    const formdata = new FormData();
+    formdata.append('TicketName', values.ticket.TicketName);
+    formdata.append('TicketCode', values.ticket.TicketName);
+    formdata.append('Description', values.ticket.Description);
+    formdata.append('ImageAvatar', dataImage);
+    formdata.append('Quantity', values.ticket.Quantity);
+    formdata.append('Files', dataImage);
+    formdata.append('Price', values.ticket.Price);
+    formdata.append('AddressUse', values.ticket.AddressBuy);
+    formdata.append('ExpiationDate', dataTimeUse);
+    formdata.append('TimeUse', dataTimeUse);
+    formdata.append('EndPoint', values.ticket.TicketName);
+    formdata.append('StartPoint', values.ticket.TicketName);
+    formdata.append('AddressBuy', values.ticket.AddressBuy);
+    formdata.append('TimeBuy', dataTimeUse);
+    formdata.append('UserId', idUser);
+    formdata.append('TicketTypeId', values.ticket.TicketTypeId);
+
+    fetch('http://ticketswap.somee.com/api/Ticket/AddTicket', {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow',
+    })
+      .then((response) => response.text())
+      .then(() => {
+        notiApi.success({
+          message: '',
+          description: 'Thêm vé thành công',
+          placement: 'topRight',
+          duration: 3,
+        });
+        return;
+      })
+      .catch(() => {
+        notiApi.error({
+          message: '',
+          description: 'Thêm vé thất bại',
+          placement: 'topRight',
+          duration: 3,
+        });
+      });
   };
   const { Option } = Select;
   const handleCheckPersonal = (check: boolean) => {
@@ -115,8 +123,21 @@ export default function PostTicketPage() {
     }
     setIsPersonal(!isPersonal);
   };
+  useEffect(() => {
+    setIdUser(appLocalStorage.get('idUser'));
+  }, [router]);
+  // if (!idUser) {
+  //   router.push('/login');
+  // }
+  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setDataImage(file);
+    }
+  };
   return (
     <>
+      {contextHolder}
       <Row>
         <Col span={24} style={{ marginBottom: '8px' }}>
           <Breadcrumb
@@ -148,7 +169,7 @@ export default function PostTicketPage() {
                     <Text>Xem thêm về Quy định đăng tin của TickSwap</Text>
                   </Col>
                   <Col span={24}>
-                    <Upload
+                    {/* <Upload
                       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                       listType="picture-card"
                       fileList={fileList}
@@ -156,8 +177,10 @@ export default function PostTicketPage() {
                       onChange={handleChange}
                     >
                       {fileList.length >= 8 ? null : uploadButton}
-                    </Upload>
-                    <Modal
+                    </Upload> */}
+                    <input type="file" onChange={handleChangeFile} />
+
+                    {/* <Modal
                       open={previewOpen}
                       title={previewTitle}
                       footer={null}
@@ -168,7 +191,7 @@ export default function PostTicketPage() {
                         style={{ width: '100%' }}
                         src={previewImage}
                       />
-                    </Modal>
+                    </Modal> */}
                   </Col>
                 </Row>
               </Col>
@@ -176,7 +199,7 @@ export default function PostTicketPage() {
               <Col span={16}>
                 <Form {...layout} name="nest-messages" onFinish={onFinish}>
                   <Form.Item
-                    name={['ticket', 'category']}
+                    name={['ticket', 'TicketTypeId']}
                     rules={[
                       {
                         required: true,
@@ -185,10 +208,10 @@ export default function PostTicketPage() {
                     ]}
                   >
                     <Select placeholder="Danh mục đăng tin" size="large">
-                      <Option value="vxp">Vé xem phim</Option>
-                      <Option value="vtt">Vé xem thể thao</Option>
-                      <Option value="vptdl">Vé phương tiện đi lại</Option>
-                      <Option value="vxcl">Vé xem concert/Liveshow</Option>
+                      <Option value="1">Vé xem phim</Option>
+                      <Option value="2">Vé xem thể thao</Option>
+                      <Option value="3">Vé phương tiện đi lại</Option>
+                      <Option value="4">Vé xem concert/Liveshow</Option>
                     </Select>
                   </Form.Item>
 
@@ -197,7 +220,7 @@ export default function PostTicketPage() {
                   </Title>
 
                   <Form.Item
-                    name={['ticket', 'name']}
+                    name={['ticket', 'TicketName']}
                     rules={[
                       {
                         required: true,
@@ -210,7 +233,7 @@ export default function PostTicketPage() {
                   <Row>
                     <Col span={6}>
                       <Form.Item
-                        name={['ticket', 'quantity']}
+                        name={['ticket', 'Quantity']}
                         rules={[
                           {
                             required: true,
@@ -228,7 +251,7 @@ export default function PostTicketPage() {
                     </Col>
                     <Col span={6}>
                       <Form.Item
-                        name={['ticket', 'cost']}
+                        name={['ticket', 'Price']}
                         rules={[
                           {
                             required: true,
@@ -247,9 +270,32 @@ export default function PostTicketPage() {
                         />
                       </Form.Item>
                     </Col>
+                    <Col span={12}>
+                      <Form.Item
+                        name={['ticket', 'AddressBuy']}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Vui lòng nhập địa điểm!',
+                          },
+                        ]}
+                      >
+                        <Input size="large" placeholder="Địa điểm" />
+                      </Form.Item>
+                    </Col>
                   </Row>
-
-                  <Form.Item name={['ticket', 'introduction']}>
+                  <Form.Item
+                    name={['ticket', 'TimeUse']}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng chọn thời gian!',
+                      },
+                    ]}
+                  >
+                    <DatePicker showTime placeholder="Thời gian" />
+                  </Form.Item>
+                  <Form.Item name={['ticket', 'Description']}>
                     <Input.TextArea
                       size="large"
                       placeholder="Mô tả chi tiết"
