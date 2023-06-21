@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { DataTicket, getListMyTicket } from './fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
-export default function MyTicketPage() {
+export default function MyTicketBuyerPage() {
   const { Title, Text } = Typography;
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -62,7 +62,7 @@ export default function MyTicketPage() {
         </Col>
         <Col span={24} style={{ marginBottom: '8px' }}>
           <Card>
-            <Title level={3}>Danh sách vé của bạn</Title>
+            <Title level={3}>Danh sách vé của bạn đã mua</Title>
           </Card>
         </Col>
         <Col span={24} style={{ marginBottom: '8px' }}>
