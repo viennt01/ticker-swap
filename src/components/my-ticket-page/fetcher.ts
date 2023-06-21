@@ -10,6 +10,8 @@ export interface DataTicket {
   price: number;
   userId: number;
   status: number;
+  addressBuy: string;
+  timeUse: string;
 }
 
 export const getListMyTicket = (data: number) => {

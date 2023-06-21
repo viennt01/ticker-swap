@@ -92,7 +92,12 @@ export default function MyTicketPage() {
                         />
                       }
                       title={<a href="https://ant.design">{item.ticketName}</a>}
-                      description={item.status}
+                      description={
+                        <>
+                          <Text>{item.addressBuy}</Text>
+                          <div>{item.timeUse}</div>
+                        </>
+                      }
                     />
                     <Text strong type="danger">
                       {formatCurrency(item.price)}
