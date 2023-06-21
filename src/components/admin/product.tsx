@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DataTicket, getListTicket } from './fetcher';
 
@@ -20,13 +20,20 @@ export default function PRODUCT() {
     },
     {
       title: 'Số lượng',
-      dataIndex: 'number',
-      key: 'number',
+      dataIndex: 'quantity',
+      key: 'quantity',
+      align: 'center',
     },
     {
       title: 'Trạng thái vé',
       dataIndex: 'status',
       key: 'status',
+      render: (value) =>
+        value !== 1 ? (
+          <Tag color="#87d068">Đã bán</Tag>
+        ) : (
+          <Tag color="#f50">Còn hàng</Tag>
+        ),
     },
     {
       title: 'Địa chỉ',

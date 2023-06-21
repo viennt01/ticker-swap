@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DataUser, getListUser } from './fetcher';
 
@@ -10,28 +10,37 @@ export default function USER() {
   const columns: ColumnsType<DataUser> = [
     {
       title: 'Tên người dùng',
-      dataIndex: 'number',
-      key: 'number',
+      dataIndex: 'userName',
+      key: 'userName',
     },
     {
       title: 'Số điện thoại',
-      dataIndex: 'price',
-      key: 'price',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
     },
     {
       title: 'Địa chỉ',
-      dataIndex: 'number',
-      key: 'number',
+      dataIndex: 'address',
+      key: 'address',
     },
     {
       title: 'Role',
       dataIndex: 'roleId',
+      align: 'center',
       key: 'roleId',
+      render: (value) => (value === 1 ? <div>Admin</div> : <div>User</div>),
     },
     {
       title: 'Trạng thái người dùng',
       dataIndex: 'status',
       key: 'status',
+      align: 'center',
+      render: (value) =>
+        value === 1 ? (
+          <Tag color="#87d068">Hoạt động</Tag>
+        ) : (
+          <Tag color="#f50">Tạm ngừng</Tag>
+        ),
     },
   ];
 

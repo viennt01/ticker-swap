@@ -1,4 +1,4 @@
-import { get, ResponseWithPayload } from '@/fetcher';
+import { postLogin, ResponseWithPayload } from '@/fetcher';
 import { API_TICKET, API_USER } from '@/fetcher/endpoint';
 export interface DataTicket {
   ticketId: number;
@@ -30,11 +30,13 @@ export interface DataUser {
 }
 
 export const getListTicket = () => {
-  return get<undefined, ResponseWithPayload<DataTicket[]>>({})(
+  return postLogin<undefined, ResponseWithPayload<DataTicket[]>>({})(
     API_TICKET.GET_ALL_TICKETS
   );
 };
 
 export const getListUser = () => {
-  return get<undefined, ResponseWithPayload<DataUser[]>>({})(API_USER.GET_ALL);
+  return postLogin<undefined, ResponseWithPayload<DataUser[]>>({})(
+    API_USER.GET_ALL
+  );
 };
