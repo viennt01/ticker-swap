@@ -11,6 +11,7 @@ import {
   Typography,
   Image,
   Spin,
+  notification,
 } from 'antd';
 import {
   FireOutlined,
@@ -21,14 +22,17 @@ import {
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { ROUTERS } from '@/constant/router';
-import { DataTicket, login } from './fetcher';
+import { DataTicket, buyTicket, login } from './fetcher';
 import { formatCurrency, formatDateTime } from '@/utils/format';
 import style from './index.module.scss';
+import { appLocalStorage } from '@/utils/localstorage';
 
 export default function DetailTickerFilmPage() {
   const [data, setData] = useState<DataTicket>();
+  const [idUser, setIdUser] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+  const [notiApi, contextHolder] = notification.useNotification();
 
   const { Title, Text } = Typography;
   const { id } = router.query;
@@ -55,9 +59,40 @@ export default function DetailTickerFilmPage() {
   };
   useEffect(() => {
     fetchData();
+    setIdUser(appLocalStorage.get('idUser'));
   }, [router]);
+  const handleBuyTicket = (id: any) => {
+    console.log(id);
+    const data = {
+      ticketId: id,
+      userId: idUser,
+    };
+    buyTicket(data)
+      .then((res) => {
+        if (res.status) {
+          notiApi.success({
+            message: '',
+            description: 'Mua thành công',
+            placement: 'topRight',
+            duration: 3,
+          });
+          router.push('/my-ticket-buyer');
+        }
+        console.log(res);
+      })
+      .catch((err) => {
+        notiApi.error({
+          message: '',
+          description: 'Mua thất bại',
+          placement: 'topRight',
+          duration: 3,
+        });
+        console.log(err);
+      });
+  };
   return (
     <>
+      {contextHolder}
       <Row>
         <Col span={24} style={{ marginBottom: '16px' }}>
           <Breadcrumb
@@ -263,7 +298,9 @@ export default function DetailTickerFilmPage() {
                             'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
                         }}
                         htmlType="submit"
-                        // onClick={() => handleChangePageTransaction('1')}
+                        onClick={() => {
+                          return handleBuyTicket(data?.ticketId);
+                        }}
                       >
                         Mua ngay
                       </Button>

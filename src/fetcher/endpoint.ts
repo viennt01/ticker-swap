@@ -18,3 +18,6 @@ export const API_TICKET = {
 export const API_USER = {
   GET_ALL: '/User/GetAllUser',
 };
+export const API_ORDER = {
+  ORDER: '/Orders/BuyTicket',
+};

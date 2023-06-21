@@ -93,6 +93,9 @@ const AppHeader = () => {
   const handleChangePageAdmin = () => {
     router.push('/admin');
   };
+  const handleChangePageMyTicketBuy = () => {
+    router.push('/my-ticket-buyer');
+  };
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -162,6 +165,7 @@ const AppHeader = () => {
                       backgroundColor: '#E8CA2B',
                       border: 'none',
                     }}
+                    onClick={() => handleChangePageMyTicketBuy()}
                   >
                     <ShoppingCartOutlined />
                     Đơn hàng

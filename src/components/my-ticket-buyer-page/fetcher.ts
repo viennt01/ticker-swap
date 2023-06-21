@@ -12,7 +12,7 @@ export interface DataTicket {
   status: number;
 }
 
-export const getListMyTicket = (data: number) => {
+export const getListMyTicketBuyer = (data: number) => {
   return postLogin<number, ResponseWithPayload<DataTicket[]>>({ data })(
     API_TICKET.GET_TICKET_BY_BUYER_ID
   );

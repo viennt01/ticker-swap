@@ -55,7 +55,7 @@ export default function MyTicketPage() {
                 title: <a onClick={changePageHome}>Trang chủ</a>,
               },
               {
-                title: 'Đơn hàng của tôi',
+                title: 'Quản lý đơn',
               },
             ]}
           />

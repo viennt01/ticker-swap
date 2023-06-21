@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { DataTicket, getListMyTicket } from './fetcher';
+import { DataTicket, getListMyTicketBuyer } from './fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
 export default function MyTicketBuyerPage() {
   const { Title, Text } = Typography;
@@ -23,7 +23,7 @@ export default function MyTicketBuyerPage() {
   const fetchData = () => {
     console.log(idUser);
 
-    getListMyTicket(idUser)
+    getListMyTicketBuyer(idUser)
       .then((res) => {
         if (res.status) {
           setData(res.data);
@@ -55,7 +55,7 @@ export default function MyTicketBuyerPage() {
                 title: <a onClick={changePageHome}>Trang chủ</a>,
               },
               {
-                title: 'Đơn hàng của tôi',
+                title: 'Đơn hàng',
               },
             ]}
           />
