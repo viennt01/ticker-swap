@@ -44,8 +44,6 @@ export default function DetailTickerFilmPage() {
     login(id as unknown as number)
       .then((res) => {
         if (res.status) {
-          console.log(res);
-
           setData(res.data);
           setLoading(false);
         }
