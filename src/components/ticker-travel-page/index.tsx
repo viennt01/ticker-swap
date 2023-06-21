@@ -130,6 +130,7 @@ export default function TicketTravelPage() {
                 ]}
                 extra={
                   <img
+                    height={272}
                     width={272}
                     alt="logo"
                     src={`data:image/png;base64,${item.avatar}`}

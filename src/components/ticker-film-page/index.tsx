@@ -132,6 +132,7 @@ export default function TickerFilmPage() {
                 extra={
                   <img
                     width={272}
+                    height={272}
                     alt="logo"
                     src={`data:image/png;base64,${item.avatar}`}
                   />
