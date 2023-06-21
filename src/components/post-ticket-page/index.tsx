@@ -20,6 +20,7 @@ export default function PostTicketPage() {
   const [isPersonal, setIsPersonal] = useState(true);
   const router = useRouter();
   const { Title, Text } = Typography;
+  const [loading, setLoading] = useState(false);
   const [idUser, setIdUser] = useState<any>();
   const changePageHome = () => {
     router.push('/');
@@ -69,6 +70,7 @@ export default function PostTicketPage() {
   // );
 
   const onFinish = (values: any) => {
+    setLoading(true);
     const dataTimeUse = `${values.ticket.TimeUse['$y']}-${
       values.ticket.TimeUse['$M'] + 1
     }-${values.ticket.TimeUse['$D']}T${values.ticket.TimeUse['$H']}:${
@@ -105,6 +107,8 @@ export default function PostTicketPage() {
           placement: 'topRight',
           duration: 3,
         });
+        router.push('/');
+        setLoading(false);
         return;
       })
       .catch(() => {
@@ -114,6 +118,7 @@ export default function PostTicketPage() {
           placement: 'topRight',
           duration: 3,
         });
+        setLoading(false);
       });
   };
   const { Option } = Select;
@@ -339,6 +344,7 @@ export default function PostTicketPage() {
 
                   <Form.Item>
                     <Button
+                      loading={loading}
                       htmlType="submit"
                       style={{
                         backgroundColor: '#E8B32B',

@@ -21,6 +21,7 @@ import {
   LogoutOutlined,
   LoginOutlined,
   ContactsOutlined,
+  DesktopOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useRouter } from 'next/router';
@@ -35,6 +36,7 @@ const AppHeader = () => {
   const [value, setValue] = useState<string>();
   const [idUser, setIdUser] = useState<string>();
   const [data, setData] = useState<DataTicket[]>([]);
+  const [role, setRole] = useState<string>('');
 
   const onChange = (newValue: string) => {
     setValue(newValue);
@@ -65,8 +67,9 @@ const AppHeader = () => {
       });
   };
   useEffect(() => {
+    setRole(appLocalStorage.get('role'));
     fetchDataListTicket();
-  }, []);
+  }, [idUser, router]);
   const handleLogout = () => {
     localStorage.clear();
     router.push('/login');
@@ -83,6 +86,12 @@ const AppHeader = () => {
   };
   const handleChangePagePost = () => {
     router.push('/post-ticket');
+  };
+  const handleChangePageMyTicket = () => {
+    router.push('/my-ticket');
+  };
+  const handleChangePageAdmin = () => {
+    router.push('/admin');
   };
   const items: MenuProps['items'] = [
     {
@@ -139,6 +148,7 @@ const AppHeader = () => {
                       backgroundColor: '#E8CA2B',
                       border: 'none',
                     }}
+                    onClick={() => handleChangePageMyTicket()}
                   >
                     <ContainerOutlined />
                     Quản lý đơn
@@ -172,19 +182,37 @@ const AppHeader = () => {
                 </Col>
                 {idUser ? (
                   <>
-                    <Col span={4}>
-                      <Button
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: '#E8CA2B',
-                          border: 'none',
-                        }}
-                      >
-                        <BellOutlined />
-                        Thông báo
-                      </Button>
-                    </Col>
+                    {role === '2' ? (
+                      <Col span={4}>
+                        <Button
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: '#E8CA2B',
+                            border: 'none',
+                          }}
+                        >
+                          <BellOutlined />
+                          Thông báo
+                        </Button>
+                      </Col>
+                    ) : (
+                      <Col span={4}>
+                        <Button
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: '#E8CA2B',
+                            border: 'none',
+                          }}
+                          onClick={() => handleChangePageAdmin()}
+                        >
+                          <DesktopOutlined />
+                          Admin
+                        </Button>
+                      </Col>
+                    )}
+
                     <Col span={4} style={{ backgroundColor: '#E8CA2B' }}>
                       <Dropdown menu={{ items }} placement="bottomRight" arrow>
                         <Button

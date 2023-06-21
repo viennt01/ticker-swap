@@ -66,6 +66,7 @@ export default function RegisterPage() {
             duration: 3,
           });
           setIsLoading(false);
+          router.push('/');
           return;
         }
         notiApi.error({
