@@ -25,37 +25,48 @@ import {
 import type { MenuProps } from 'antd';
 import { useRouter } from 'next/router';
 import { appLocalStorage } from '@/utils/localstorage';
+import { DataTicket, getListTicket } from './fetcher';
 
 const { Header } = Layout;
 const { Text } = Typography;
-
-const treeData = [
-  {
-    value: 'Lật mặt',
-    title: <Text style={{ width: '100%' }}>Lật mặt</Text>,
-  },
-  {
-    value: 'Nhà bà nữ',
-    title: 'Nhà bà nữ',
-  },
-  {
-    value: 'Nghề siêu dễ',
-    title: 'Nghề siêu dễ',
-  },
-  {
-    value: 'Mắt biếc',
-    title: 'Mắt biếc',
-  },
-];
 
 const AppHeader = () => {
   const router = useRouter();
   const [value, setValue] = useState<string>();
   const [idUser, setIdUser] = useState<string>();
+  const [data, setData] = useState<DataTicket[]>([]);
 
   const onChange = (newValue: string) => {
     setValue(newValue);
   };
+  const treeData = [
+    data.map((data) => {
+      return {
+        value: data.ticketId,
+        title: (
+          <Text onClick={() => changePage(`/ticker-film/${data.ticketId}`)}>
+            {data.ticketName}
+          </Text>
+        ),
+      };
+    }),
+  ];
+  const changePage = (id: string) => {
+    router.push(id);
+  };
+  const fetchDataListTicket = () => {
+    getListTicket()
+      .then((res) => {
+        console.log(res);
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    fetchDataListTicket();
+  }, []);
   const handleLogout = () => {
     localStorage.clear();
     router.push('/login');
