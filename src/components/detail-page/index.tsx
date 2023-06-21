@@ -22,13 +22,14 @@ import {
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { ROUTERS } from '@/constant/router';
-import { DataTicket, buyTicket, login } from './fetcher';
+import { DataTicket, DataUser, buyTicket, getTicket, login } from './fetcher';
 import { formatCurrency, formatDateTime } from '@/utils/format';
 import style from './index.module.scss';
 import { appLocalStorage } from '@/utils/localstorage';
 
 export default function DetailTickerFilmPage() {
   const [data, setData] = useState<DataTicket>();
+  const [dataUser, setDataUser] = useState<DataUser>();
   const [idUser, setIdUser] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
@@ -48,7 +49,21 @@ export default function DetailTickerFilmPage() {
     login(id as unknown as number)
       .then((res) => {
         if (res.status) {
+          fetchDataUser();
           setData(res.data);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log('err', err);
+        setLoading(false);
+      });
+  };
+  const fetchDataUser = () => {
+    getTicket(data?.userId as unknown as number)
+      .then((res) => {
+        if (res.status) {
+          setDataUser(res.data);
           setLoading(false);
         }
       })
@@ -60,7 +75,7 @@ export default function DetailTickerFilmPage() {
   useEffect(() => {
     fetchData();
     setIdUser(appLocalStorage.get('idUser'));
-  }, [router]);
+  }, [router, loading]);
   const handleBuyTicket = (id: any) => {
     console.log(id);
     const data = {
@@ -197,13 +212,13 @@ export default function DetailTickerFilmPage() {
                   <Row>
                     <Col span={6}>
                       <Avatar
-                        src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1"
+                        src={`data:image/png;base64,${dataUser?.image}`}
                         size={64}
                       />
                     </Col>
 
                     <Col span={18}>
-                      <Title level={5}>Thanh Vien</Title>
+                      <Title level={5}>{dataUser?.fulName}</Title>
                       <Badge
                         status="processing"
                         text="Hoạt động 10 phút trước"
@@ -325,6 +340,7 @@ export default function DetailTickerFilmPage() {
                             'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
                         }}
                         htmlType="submit"
+                        href={`tel:${dataUser?.phoneNumber}`}
                       >
                         <Row>
                           <Col
@@ -338,12 +354,18 @@ export default function DetailTickerFilmPage() {
                               style={{ marginRight: '8px', color: '#000' }}
                             />{' '}
                             <Text strong style={{ color: '#fff' }}>
-                              091473099
+                              {dataUser?.phoneNumber}
                             </Text>
                           </Col>
-                          <Col span={8}>
+                          <Col
+                            span={8}
+                            style={{
+                              display: 'flex',
+                              right: '0px',
+                            }}
+                          >
                             <Text strong style={{ color: '#fff' }}>
-                              Bấm để hiện số
+                              BẤM ĐỂ GỌI
                             </Text>
                           </Col>
                         </Row>
@@ -369,10 +391,11 @@ export default function DetailTickerFilmPage() {
                             'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
                         }}
                         htmlType="submit"
+                        href={`https://zalo.me/${dataUser?.phoneNumber}`}
                       >
                         <Row>
                           <Col
-                            span={12}
+                            span={11}
                             style={{
                               display: 'flex',
                               left: '0px',
@@ -385,7 +408,13 @@ export default function DetailTickerFilmPage() {
                               }}
                             />
                           </Col>
-                          <Col span={12}>
+                          <Col
+                            span={12}
+                            style={{
+                              display: 'flex',
+                              right: '0px',
+                            }}
+                          >
                             <Text strong style={{ color: '#2BE876' }}>
                               CHAT VỚI NGƯỜI BÁN
                             </Text>

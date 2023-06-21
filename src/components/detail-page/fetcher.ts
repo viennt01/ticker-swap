@@ -1,5 +1,5 @@
 import { postLogin, ResponseWithPayload } from '@/fetcher';
-import { API_ORDER, API_TICKET } from '@/fetcher/endpoint';
+import { API_ORDER, API_TICKET, API_USER } from '@/fetcher/endpoint';
 export interface DataTicket {
   ticketId: number;
   ticketName: string;
@@ -20,6 +20,23 @@ export interface DataTicket {
 export const login = (data: number) => {
   return postLogin<number, ResponseWithPayload<DataTicket>>({ data })(
     API_TICKET.GET_TICKET_BY_ID
+  );
+};
+
+export interface DataUser {
+  userId: number;
+  userName: string;
+  password: string;
+  phoneNumber: string;
+  fulName: number;
+  image: string;
+  address: number;
+  status: string;
+}
+
+export const getTicket = (data: number) => {
+  return postLogin<number, ResponseWithPayload<DataUser>>({ data })(
+    API_USER.GET_USER_BY_ID
   );
 };
 

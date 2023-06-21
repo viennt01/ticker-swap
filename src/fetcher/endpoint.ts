@@ -17,6 +17,7 @@ export const API_TICKET = {
 
 export const API_USER = {
   GET_ALL: '/User/GetAllUser',
+  GET_USER_BY_ID: '/User/GetUserById',
 };
 export const API_ORDER = {
   ORDER: '/Orders/BuyTicket',
