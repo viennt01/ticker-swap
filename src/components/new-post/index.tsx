@@ -59,7 +59,7 @@ export default function NewPost() {
             {data.map((data) => {
               return (
                 <Col
-                  key={data.ticketId}
+                  key={data.id}
                   span={8}
                   style={{
                     marginBottom: '24px',
@@ -87,7 +87,7 @@ export default function NewPost() {
                   </Row>
 
                   <Typography.Text
-                    onClick={() => changePage(`/ticker-film/${data.ticketId}`)}
+                    onClick={() => changePage(`/ticker-film/${data.id}`)}
                     style={{
                       alignItems: 'center',
                       display: 'flex',

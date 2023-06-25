@@ -110,7 +110,7 @@ export default function TicketConcertPage() {
             dataSource={data}
             renderItem={(item) => (
               <List.Item
-                key={item.ticketId}
+                key={item.id}
                 actions={[
                   <IconText
                     icon={FireOutlined}
@@ -140,7 +140,7 @@ export default function TicketConcertPage() {
                   title={
                     <a
                       onClick={() =>
-                        changePageDetail(item.ticketId as unknown as string)
+                        changePageDetail(item.id as unknown as string)
                       }
                     >
                       {item.ticketName}

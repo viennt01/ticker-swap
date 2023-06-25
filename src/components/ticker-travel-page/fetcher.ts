@@ -1,7 +1,7 @@
 import { postLogin, ResponseWithPayload } from '@/fetcher';
 import { API_TICKET } from '@/fetcher/endpoint';
 export interface DataTicket {
-  ticketId: number;
+  id: number;
   ticketName: string;
   ticketCode: string;
   description: string;

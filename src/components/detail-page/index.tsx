@@ -5,7 +5,6 @@ import {
   Breadcrumb,
   Button,
   Card,
-  Carousel,
   Col,
   Row,
   Typography,
@@ -13,19 +12,20 @@ import {
   Spin,
   notification,
 } from 'antd';
-import {
-  FireOutlined,
-  PhoneOutlined,
-  MessageOutlined,
-  StarOutlined,
-  StarFilled,
-} from '@ant-design/icons';
+import { FireOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { ROUTERS } from '@/constant/router';
-import { DataTicket, DataUser, buyTicket, getTicket, login } from './fetcher';
+import {
+  DataTicket,
+  DataUser,
+  buyTicket,
+  getTicket,
+  getDataDetailTicket,
+} from './fetcher';
 import { formatCurrency, formatDateTime } from '@/utils/format';
 import style from './index.module.scss';
 import { appLocalStorage } from '@/utils/localstorage';
+import { STATUS_CODE } from '@/constant/error-code';
 
 export default function DetailTickerFilmPage() {
   const [data, setData] = useState<DataTicket>();
@@ -34,21 +34,21 @@ export default function DetailTickerFilmPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
   const [notiApi, contextHolder] = notification.useNotification();
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { Title, Text } = Typography;
   const { id } = router.query;
 
   const changePageHome = () => {
     router.push(ROUTERS.HOME);
   };
-  // const handleChangePageTransaction = (id: string) => {
-  //   router.push(ROUTERS.TRANSACTION(id));
-  // };
   const checkSave = true;
   const fetchData = () => {
-    login(id as unknown as number)
+    const dataTicketGet = {
+      id: id as unknown as number,
+    };
+    getDataDetailTicket(dataTicketGet)
       .then((res) => {
-        if (res.status) {
+        if (res.message === STATUS_CODE.SUCCESS) {
           fetchDataUser();
           setData(res.data);
           setLoading(false);
@@ -60,9 +60,9 @@ export default function DetailTickerFilmPage() {
       });
   };
   const fetchDataUser = () => {
-    getTicket(data?.userId as unknown as number)
+    getTicket(data?.userId as unknown as string)
       .then((res) => {
-        if (res.status) {
+        if (res.message === STATUS_CODE.SUCCESS) {
           setDataUser(res.data);
           setLoading(false);
         }
@@ -77,32 +77,41 @@ export default function DetailTickerFilmPage() {
     setIdUser(appLocalStorage.get('idUser'));
   }, [router, loading]);
   const handleBuyTicket = (id: any) => {
-    console.log(id);
+    setIsLoading(true);
     const data = {
       ticketId: id,
-      userId: idUser,
+      userId: Number(idUser),
     };
+    console.log(data);
+
     buyTicket(data)
       .then((res) => {
-        if (res.status) {
+        if (res.message === 'Thành công') {
           notiApi.success({
             message: '',
             description: 'Mua thành công',
             placement: 'topRight',
             duration: 3,
           });
-          router.push('/my-ticket-buyer');
+          router.push('/cart');
+          setIsLoading(false);
         }
-        console.log(res);
-      })
-      .catch((err) => {
         notiApi.error({
           message: '',
           description: 'Mua thất bại',
           placement: 'topRight',
           duration: 3,
         });
-        console.log(err);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        notiApi.error({
+          message: '',
+          description: 'Mua thất bại',
+          placement: 'topRight',
+          duration: 3,
+        });
+        setIsLoading(false);
       });
   };
   return (
@@ -139,21 +148,14 @@ export default function DetailTickerFilmPage() {
             <Row>
               <Col span={24} style={{ marginBottom: '24px' }}>
                 <Card style={{ height: '400px', backgroundColor: '#F5F5F5' }}>
-                  <Carousel>
-                    {data?.images.map((image) => (
-                      <div
-                        key={image.imageId}
-                        className={style.contentContainer}
-                      >
-                        <Image
-                          src={`data:image/png;base64,${image.imageData}`}
-                          alt="ve pts"
-                          height={350}
-                          width={'auto'}
-                        />
-                      </div>
-                    ))}
-                  </Carousel>
+                  <div className={style.contentContainer}>
+                    <Image
+                      src={`data:image/png;base64,${data?.avatar}`}
+                      alt="ve pts"
+                      height={350}
+                      width={'auto'}
+                    />
+                  </div>
                 </Card>
               </Col>
               <Col span={24}>
@@ -303,6 +305,7 @@ export default function DetailTickerFilmPage() {
                     >
                       <Button
                         type="primary"
+                        loading={isLoading}
                         style={{
                           height: '40px',
                           width: '80%',
@@ -314,7 +317,7 @@ export default function DetailTickerFilmPage() {
                         }}
                         htmlType="submit"
                         onClick={() => {
-                          return handleBuyTicket(data?.ticketId);
+                          return handleBuyTicket(data?.id);
                         }}
                       >
                         Mua ngay
@@ -342,33 +345,9 @@ export default function DetailTickerFilmPage() {
                         htmlType="submit"
                         href={`tel:${dataUser?.phoneNumber}`}
                       >
-                        <Row>
-                          <Col
-                            span={16}
-                            style={{
-                              display: 'flex',
-                              left: '0px',
-                            }}
-                          >
-                            <PhoneOutlined
-                              style={{ marginRight: '8px', color: '#000' }}
-                            />{' '}
-                            <Text strong style={{ color: '#fff' }}>
-                              {dataUser?.phoneNumber}
-                            </Text>
-                          </Col>
-                          <Col
-                            span={8}
-                            style={{
-                              display: 'flex',
-                              right: '0px',
-                            }}
-                          >
-                            <Text strong style={{ color: '#fff' }}>
-                              BẤM ĐỂ GỌI
-                            </Text>
-                          </Col>
-                        </Row>
+                        <Text strong style={{ color: '#fff' }}>
+                          BẤM ĐỂ GỌI
+                        </Text>
                       </Button>
                     </Col>
                     <Col
@@ -393,33 +372,9 @@ export default function DetailTickerFilmPage() {
                         htmlType="submit"
                         href={`https://zalo.me/${dataUser?.phoneNumber}`}
                       >
-                        <Row>
-                          <Col
-                            span={11}
-                            style={{
-                              display: 'flex',
-                              left: '0px',
-                            }}
-                          >
-                            <MessageOutlined
-                              style={{
-                                marginRight: '8px',
-                                color: '#000',
-                              }}
-                            />
-                          </Col>
-                          <Col
-                            span={12}
-                            style={{
-                              display: 'flex',
-                              right: '0px',
-                            }}
-                          >
-                            <Text strong style={{ color: '#2BE876' }}>
-                              CHAT VỚI NGƯỜI BÁN
-                            </Text>
-                          </Col>
-                        </Row>
+                        <Text strong style={{ color: '#2BE876' }}>
+                          CHAT VỚI NGƯỜI BÁN
+                        </Text>
                       </Button>
                     </Col>
                   </Row>
