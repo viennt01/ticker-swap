@@ -72,11 +72,14 @@ const fetchResolver = async (promise: Promise<Response>) => {
 };
 
 export const get =
-  <T, R>({ options, headers, gw, timeout }: CRUDProps<T>) =>
+  <T, R>({ options, gw, timeout }: CRUDProps<T>) =>
   (url: string): Promise<R> => {
     const fetchPromise = requestWithTimeout(
       fetch(`${getGateway(gw)}${url}`, {
-        headers: { ...configHeaders.headers, ...headers },
+        headers: {
+          Accept: '*/*',
+          'Content-Type': 'application/json',
+        },
         ...options,
       }),
       timeout

@@ -13,7 +13,6 @@ export default function NewPost() {
   const fetchDataListTicket = () => {
     getListTicket()
       .then((res) => {
-        console.log(res);
         setData(res.data);
         setLoading(false);
       })
@@ -25,6 +24,8 @@ export default function NewPost() {
   useEffect(() => {
     fetchDataListTicket();
   }, []);
+  console.log('data', data);
+
   return (
     <div style={{ marginBottom: '64px' }}>
       <Card
@@ -54,67 +55,61 @@ export default function NewPost() {
           </div>
         ) : (
           <Row gutter={24}>
-            {data
-              .filter((allTicket: DataTicket) => {
-                return allTicket.status === 1;
-              })
-              .map((data) => {
-                return (
-                  <Col
-                    key={data.ticketId}
-                    span={8}
+            {data.map((data) => {
+              return (
+                <Col
+                  key={data.ticketId}
+                  span={8}
+                  style={{
+                    marginBottom: '24px',
+                  }}
+                >
+                  <Row>
+                    <Col
+                      span={24}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Image
+                        src={`data:image/png;base64,${data.avatar}`}
+                        alt="cgv"
+                        style={{
+                          borderRadius: '24px',
+                          marginBottom: '16px',
+                          display: 'block',
+                          height: '160px',
+                        }}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Typography.Text
+                    onClick={() => changePage(`/ticker-film/${data.ticketId}`)}
                     style={{
-                      marginBottom: '24px',
+                      alignItems: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginBottom: '16px',
+                      cursor: 'pointer',
                     }}
                   >
-                    <Row>
-                      <Col
-                        span={24}
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <Image
-                          src={`data:image/png;base64,${data.avatar}`}
-                          alt="cgv"
-                          style={{
-                            borderRadius: '24px',
-                            marginBottom: '16px',
-                            display: 'block',
-                            height: '160px',
-                          }}
-                        />
-                      </Col>
-                    </Row>
-
-                    <Typography.Text
-                      onClick={() =>
-                        changePage(`/ticker-film/${data.ticketId}`)
-                      }
-                      style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        marginBottom: '16px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {data.ticketName}
-                    </Typography.Text>
-                    <Typography.Text
-                      type="danger"
-                      style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      {data.price} VND
-                    </Typography.Text>
-                  </Col>
-                );
-              })}
+                    {data.ticketName}
+                  </Typography.Text>
+                  <Typography.Text
+                    type="danger"
+                    style={{
+                      alignItems: 'center',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {data.price} VND
+                  </Typography.Text>
+                </Col>
+              );
+            })}
           </Row>
         )}
       </Card>

@@ -41,20 +41,16 @@ const AppHeader = () => {
   const onChange = (newValue: string) => {
     setValue(newValue);
   };
-  const treeData = data
-    .filter((allTicket) => {
-      return allTicket.status === 1;
-    })
-    .map((data) => {
-      return {
-        value: data.ticketName,
-        title: (
-          <Text onClick={() => changePage(`/ticker-film/${data.ticketId}`)}>
-            {data.ticketName}
-          </Text>
-        ),
-      };
-    });
+  const treeData = data.map((data) => {
+    return {
+      value: data.ticketName,
+      title: (
+        <Text onClick={() => changePage(`/ticker-film/${data.ticketId}`)}>
+          {data.ticketName}
+        </Text>
+      ),
+    };
+  });
 
   const changePage = (id: string) => {
     router.push(id);

@@ -1,4 +1,4 @@
-import { postLogin, ResponseWithPayload } from '@/fetcher';
+import { get, ResponseWithPayload } from '@/fetcher';
 import { API_TICKET } from '@/fetcher/endpoint';
 export interface DataTicket {
   ticketId: number;
@@ -19,7 +19,7 @@ export interface DataTicket {
 }
 
 export const getListTicket = () => {
-  return postLogin<undefined, ResponseWithPayload<DataTicket[]>>({})(
+  return get<undefined, ResponseWithPayload<DataTicket[]>>({})(
     API_TICKET.GET_ALL_TICKETS
   );
 };
