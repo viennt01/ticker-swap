@@ -25,3 +25,7 @@ export const API_ORDER = {
   DELETE_TICKET_BY_CART: '/Carts/DeleteToCart',
   BUY_TICKET: '/Carts/PaymentToCart',
 };
+
+export const API_PAYMENT = {
+  REQUEST_PAYMENT: '/Payments/RequestPayment',
+};

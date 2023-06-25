@@ -128,6 +128,7 @@ export default function CartPage() {
           placement: 'topRight',
           duration: 3,
         });
+        router.push('/payments');
       });
   };
   function calculateTotalPrice(data: any) {
