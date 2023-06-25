@@ -98,6 +98,9 @@ const AppHeader = () => {
   const handleChangePageCart = () => {
     router.push('/cart');
   };
+  const handleChangePageInformation = () => {
+    router.push('/information');
+  };
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -107,6 +110,15 @@ const AppHeader = () => {
             style={{ fontSize: '16px', color: 'red', marginRight: '8px' }}
           />{' '}
           <Text type="danger">Đăng xuất</Text>
+        </div>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <div onClick={handleChangePageInformation}>
+          <UserOutlined style={{ fontSize: '16px', marginRight: '8px' }} />
+          <Text>Thông tin cá nhân</Text>
         </div>
       ),
     },
