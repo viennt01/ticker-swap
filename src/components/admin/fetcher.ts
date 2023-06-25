@@ -1,21 +1,12 @@
-import { postLogin, ResponseWithPayload } from '@/fetcher';
-import { API_TICKET, API_USER } from '@/fetcher/endpoint';
+import { get, ResponseWithPayload } from '@/fetcher';
+import { API_PAYMENT, API_TICKET, API_USER } from '@/fetcher/endpoint';
 export interface DataTicket {
-  ticketId: number;
+  id: number;
   ticketName: string;
-  ticketCode: string;
   description: string;
-  quantity: number;
   avatar: string;
   price: number;
-  userId: number;
-  addressBuy: string;
-  timeUse: string;
-  status: number;
-  images: {
-    imageId: string;
-    imageData: string;
-  }[];
+  created: string;
 }
 export interface DataUser {
   userId: number;
@@ -28,15 +19,39 @@ export interface DataUser {
   status: number;
   roleId: string;
 }
+export interface AllPayment {
+  id: number;
+  userId: number;
+  keyPayment: string;
+  price: number;
+  status: number;
+  created: string;
+}
 
 export const getListTicket = () => {
-  return postLogin<undefined, ResponseWithPayload<DataTicket[]>>({})(
+  return get<undefined, ResponseWithPayload<DataTicket[]>>({})(
     API_TICKET.GET_ALL_TICKETS
   );
 };
 
+export const getListTicketSell = () => {
+  return get<undefined, ResponseWithPayload<DataTicket[]>>({})(
+    API_TICKET.GET_ALL_TICKETS_SELL
+  );
+};
+
 export const getListUser = () => {
-  return postLogin<undefined, ResponseWithPayload<DataUser[]>>({})(
-    API_USER.GET_ALL
+  return get<undefined, ResponseWithPayload<DataUser[]>>({})(API_USER.GET_ALL);
+};
+
+export const getListPaymentAll = () => {
+  return get<undefined, ResponseWithPayload<AllPayment[]>>({})(
+    API_PAYMENT.ALL_PAYMENT
+  );
+};
+
+export const getListPaymentConfirm = () => {
+  return get<undefined, ResponseWithPayload<AllPayment[]>>({})(
+    API_PAYMENT.ALL_PAYMENT
   );
 };

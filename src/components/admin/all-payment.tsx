@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { DataTicket, getListTicketSell } from './fetcher';
+import { AllPayment, getListPaymentAll } from './fetcher';
 import { formatDateTime } from '@/utils/format';
 
-export default function PRODUCT() {
+export default function ALL_PAYMENT() {
   // const [notiApi, contextHolder] = notification.useNotification();
 
-  const [data, setData] = useState<DataTicket[]>([]);
-  const columns: ColumnsType<DataTicket> = [
+  const [data, setData] = useState<AllPayment[]>([]);
+  const columns: ColumnsType<AllPayment> = [
     {
-      title: 'Tên vé',
-      dataIndex: 'ticketName',
-      key: 'ticketName',
+      title: 'Mã người dùng',
+      dataIndex: 'userId',
+      key: 'userId',
+      align: 'center',
     },
     {
-      title: 'Tổng số tiền',
+      title: 'Số tiền nộp',
       dataIndex: 'price',
       key: 'price',
       align: 'center',
     },
     {
-      title: 'Ngày đăng',
+      title: 'Mã giao dịch',
+      dataIndex: 'keyPayment',
+      key: 'keyPayment',
+      align: 'center',
+    },
+    {
+      title: 'Thời gian',
       dataIndex: 'created',
       key: 'created',
       align: 'center',
@@ -33,10 +40,22 @@ export default function PRODUCT() {
         );
       },
     },
+    {
+      title: 'Trạng thái giao dịch',
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
+      render: (value) =>
+        value === 'Chờ xử lí' ? (
+          <Tag color="warning">{value}</Tag>
+        ) : (
+          <Tag color="#87d068">{value}</Tag>
+        ),
+    },
   ];
 
   const fetchDataListTicket = () => {
-    getListTicketSell()
+    getListPaymentAll()
       .then((res) => {
         console.log(res);
         setData(res.data);

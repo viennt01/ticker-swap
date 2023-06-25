@@ -36,10 +36,10 @@ export default function USER() {
       key: 'status',
       align: 'center',
       render: (value) =>
-        value === 1 ? (
-          <Tag color="#87d068">Hoạt động</Tag>
+        value === 'Đang sử dụng' ? (
+          <Tag color="#87d068">{value}</Tag>
         ) : (
-          <Tag color="#f50">Tạm ngừng</Tag>
+          <Tag color="#f50">{value}</Tag>
         ),
     },
   ];
@@ -48,7 +48,7 @@ export default function USER() {
     getListUser()
       .then((res) => {
         console.log(res);
-        setData(res.data.filter((data) => data.status === 1));
+        setData(res.data);
         // setLoading(false);
       })
       .catch((err) => {

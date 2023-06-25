@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag } from 'antd';
+import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DataTicket, getListTicket } from './fetcher';
+import { formatDateTime } from '@/utils/format';
 
 export default function ORDER() {
   // const [notiApi, contextHolder] = notification.useNotification();
@@ -20,27 +21,17 @@ export default function ORDER() {
       align: 'center',
     },
     {
-      title: 'Số lượng',
-      dataIndex: 'quantity',
-      key: 'quantity',
+      title: 'Ngày đăng',
+      dataIndex: 'created',
+      key: 'created',
       align: 'center',
-    },
-    {
-      title: 'Trạng thái vé',
-      dataIndex: 'status',
-      key: 'status',
-      align: 'center',
-      render: (value) =>
-        value === 1 ? (
-          <Tag color="#87d068">Đã bán</Tag>
-        ) : (
-          <Tag color="#f50">Còn hàng</Tag>
-        ),
-    },
-    {
-      title: 'Địa chỉ',
-      dataIndex: 'addressBuy',
-      key: 'addressBuy',
+      render: (value) => {
+        return (
+          <div>
+            {formatDateTime(new Date(value || '').getTime() as unknown as Date)}
+          </div>
+        );
+      },
     },
   ];
 
