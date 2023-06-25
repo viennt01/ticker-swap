@@ -20,5 +20,8 @@ export const API_USER = {
   GET_USER_BY_ID: '/Users',
 };
 export const API_ORDER = {
-  ORDER: '/CARTS/AddToCart',
+  ORDER: '/Carts/AddToCart',
+  GET_TICKET_BY_CART: '/Carts/GetCartByIdUser',
+  DELETE_TICKET_BY_CART: '/Carts/DeleteToCart',
+  BUY_TICKET: '/Carts/PaymentToCart',
 };

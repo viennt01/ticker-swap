@@ -26,7 +26,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#2f54eb',
+          colorPrimary: '#E8CA2B',
         },
         components: {
           Input: {},
