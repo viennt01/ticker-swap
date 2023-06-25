@@ -26,6 +26,7 @@ import React from 'react';
 import { ROUTERS } from '@/constant/router';
 import { DataTicket, login } from './fetcher';
 import { formatCurrency } from '@/utils/format';
+import { STATUS_CODE } from '@/constant/error-code';
 
 export default function TickerFilmPage() {
   const router = useRouter();
@@ -167,9 +168,12 @@ export default function TickerFilmPage() {
     );
   };
   const fetchData = () => {
-    login(1)
+    const data = {
+      id: 1,
+    };
+    login(data)
       .then((res) => {
-        if (res.status) {
+        if (res.message === STATUS_CODE.SUCCESS) {
           setData(res.data);
           setLoading(false);
         }

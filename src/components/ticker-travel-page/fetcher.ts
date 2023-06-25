@@ -10,9 +10,11 @@ export interface DataTicket {
   price: number;
   userId: number;
 }
-
-export const login = (data: number) => {
-  return postLogin<number, ResponseWithPayload<DataTicket[]>>({ data })(
+export interface dataByTicket {
+  id: number;
+}
+export const login = (data: dataByTicket) => {
+  return postLogin<dataByTicket, ResponseWithPayload<DataTicket[]>>({ data })(
     API_TICKET.GET_TICKET_BY_TYPE
   );
 };

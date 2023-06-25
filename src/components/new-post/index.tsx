@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Typography, Image, Spin } from 'antd';
 import { useRouter } from 'next/router';
 import { DataTicket, getListTicket } from './fetcher';
+import { formatCurrency } from '@/utils/format';
 
 export default function NewPost() {
   const router = useRouter();
@@ -105,7 +106,7 @@ export default function NewPost() {
                       justifyContent: 'center',
                     }}
                   >
-                    {data.price} VND
+                    {formatCurrency(data.price)}
                   </Typography.Text>
                 </Col>
               );

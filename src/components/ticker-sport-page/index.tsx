@@ -25,6 +25,7 @@ import React from 'react';
 import { ROUTERS } from '@/constant/router';
 import { DataTicket, login } from './fetcher';
 import { formatCurrency } from '@/utils/format';
+import { STATUS_CODE } from '@/constant/error-code';
 
 export default function TicketSportPage() {
   const router = useRouter();
@@ -166,9 +167,12 @@ export default function TicketSportPage() {
     );
   };
   const fetchData = () => {
-    login(2)
+    const data = {
+      id: 2,
+    };
+    login(data)
       .then((res) => {
-        if (res.status) {
+        if (res.message === STATUS_CODE.SUCCESS) {
           setData(res.data);
           setLoading(false);
         }
