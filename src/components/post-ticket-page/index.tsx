@@ -15,6 +15,7 @@ import {
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { appLocalStorage } from '@/utils/localstorage';
+import { STATUS_CODE } from '@/constant/error-code';
 
 export default function PostTicketPage() {
   const [isPersonal, setIsPersonal] = useState(true);
@@ -30,84 +31,59 @@ export default function PostTicketPage() {
     wrapperCol: { span: 24 },
   };
 
-  // const getBase64 = (file: any): Promise<string> =>
-  //   new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => resolve(reader.result as string);
-  //     reader.onerror = (error) => reject(error);
-  //   });
-
-  // const [previewOpen, setPreviewOpen] = useState(false);
-  // const [previewImage, setPreviewImage] = useState('');
-  // const [previewTitle, setPreviewTitle] = useState('');
-  // const [fileList, setFileList] = useState<UploadFile[]>([]);
-
   // const handleCancel = () => setPreviewOpen(false);
   const [notiApi, contextHolder] = notification.useNotification();
   const [dataImage, setDataImage] = useState<any>('');
 
-  // const handlePreview = async (file: UploadFile) => {
-  //   if (!file.url && !file.preview) {
-  //     file.preview = await getBase64(file.originFileObj as any);
-  //   }
-
-  //   setPreviewImage(file.url || (file.preview as string));
-  //   setPreviewOpen(true);
-  //   setPreviewTitle(
-  //     file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1)
-  //   );
-  // };
-
-  // const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
-  //   setFileList(newFileList);
-
-  // const uploadButton = (
-  //   <div>
-  //     <PlusOutlined />
-  //     <div style={{ marginTop: 8 }}>Upload</div>
-  //   </div>
-  // );
-
   const onFinish = (values: any) => {
     setLoading(true);
-    const dataTimeUse = `${values.ticket.TimeUse['$y']}-${
-      values.ticket.TimeUse['$M'] + 1
-    }-${values.ticket.TimeUse['$D']}T${values.ticket.TimeUse['$H']}:${
-      values.ticket.TimeUse['$m']
-    }:${values.ticket.TimeUse['$s']}.${values.ticket.TimeUse['$ms']}`;
+    // const dataTimeUse = `${values.ticket.TimeUse['$y']}-${
+    //   values.ticket.TimeUse['$M'] + 1
+    // }-${values.ticket.TimeUse['$D']}T${values.ticket.TimeUse['$H']}:${
+    //   values.ticket.TimeUse['$m']
+    // }:${values.ticket.TimeUse['$s']}.${values.ticket.TimeUse['$ms']}`;
+    const dataTimeUse = values.ticket.TimeUse.valueOf();
     const formdata = new FormData();
-    formdata.append('TicketName', values.ticket.TicketName);
-    formdata.append('TicketCode', values.ticket.TicketName);
-    formdata.append('Description', values.ticket.Description);
-    formdata.append('ImageAvatar', dataImage);
-    formdata.append('Quantity', values.ticket.Quantity);
-    formdata.append('Files', dataImage);
-    formdata.append('Price', values.ticket.Price);
-    formdata.append('AddressUse', values.ticket.AddressBuy);
-    formdata.append('ExpiationDate', dataTimeUse);
-    formdata.append('TimeUse', dataTimeUse);
-    formdata.append('EndPoint', values.ticket.TicketName);
-    formdata.append('StartPoint', values.ticket.TicketName);
-    formdata.append('AddressBuy', values.ticket.AddressBuy);
-    formdata.append('TimeBuy', dataTimeUse);
-    formdata.append('UserId', idUser);
-    formdata.append('TicketTypeId', values.ticket.TicketTypeId);
+    formdata.append('TicketName', values.ticket.TicketName); //
+    formdata.append('TicketCode', values.ticket.TicketName); //
+    formdata.append('Description', values.ticket.Description); //
+    formdata.append('AvatarTicket', dataImage); //
+    formdata.append('Price', values.ticket.Price); //
+    formdata.append('AddressUse', values.ticket.AddressBuy); //
+    formdata.append('ExpiationDate', dataTimeUse); //
+    formdata.append('TimeUse', dataTimeUse); //
+    formdata.append('EndPoint', values.ticket.TicketName); //
+    formdata.append('StartPoint', values.ticket.TicketName); //
+    formdata.append('AddressBuy', values.ticket.AddressBuy); //
+    formdata.append('TimeBuy', dataTimeUse); //
+    formdata.append('UserId', idUser); //
+    formdata.append('TicketTypeId', values.ticket.TicketTypeId); //
 
-    fetch('http://ticketswap.somee.com/api/Ticket/AddTicket', {
+    fetch('http://ticketswap.somee.com/api/Tickets/Create', {
       method: 'POST',
       body: formdata,
       redirect: 'follow',
     })
       .then((response) => response.text())
-      .then(() => {
-        notiApi.success({
+      .then((res: any) => {
+        console.log(res);
+        if (res.message === STATUS_CODE.SUCCESS) {
+          notiApi.success({
+            message: '',
+            description: 'Thêm vé thành công',
+            placement: 'topRight',
+            duration: 3,
+          });
+          router.push('/');
+          setLoading(false);
+          return;
+        }
+        notiApi.error({
           message: '',
-          description: 'Thêm vé thành công',
+          description: 'Thêm vé thất bại',
           placement: 'topRight',
           duration: 3,
         });
-        router.push('/');
         setLoading(false);
         return;
       })
@@ -131,9 +107,6 @@ export default function PostTicketPage() {
   useEffect(() => {
     setIdUser(appLocalStorage.get('idUser'));
   }, [router]);
-  // if (!idUser) {
-  //   router.push('/login');
-  // }
   const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
@@ -174,29 +147,7 @@ export default function PostTicketPage() {
                     <Text>Xem thêm về Quy định đăng tin của TickSwap</Text>
                   </Col>
                   <Col span={24}>
-                    {/* <Upload
-                      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                      listType="picture-card"
-                      fileList={fileList}
-                      onPreview={handlePreview}
-                      onChange={handleChange}
-                    >
-                      {fileList.length >= 8 ? null : uploadButton}
-                    </Upload> */}
                     <input type="file" onChange={handleChangeFile} />
-
-                    {/* <Modal
-                      open={previewOpen}
-                      title={previewTitle}
-                      footer={null}
-                      onCancel={handleCancel}
-                    >
-                      <img
-                        alt="example"
-                        style={{ width: '100%' }}
-                        src={previewImage}
-                      />
-                    </Modal> */}
                   </Col>
                 </Row>
               </Col>
@@ -266,7 +217,7 @@ export default function PostTicketPage() {
                       >
                         <InputNumber
                           size="large"
-                          placeholder="Gía /1vé"
+                          placeholder="Gía vé"
                           style={{ width: '110px' }}
                           min={0}
                           formatter={(value) =>
