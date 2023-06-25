@@ -3,10 +3,11 @@ import { Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { AllPayment, getListPaymentAll } from './fetcher';
 import { formatDateTime } from '@/utils/format';
+import { useRouter } from 'next/router';
 
 export default function ALL_PAYMENT() {
   // const [notiApi, contextHolder] = notification.useNotification();
-
+  const router = useRouter();
   const [data, setData] = useState<AllPayment[]>([]);
   const columns: ColumnsType<AllPayment> = [
     {
@@ -68,7 +69,7 @@ export default function ALL_PAYMENT() {
   };
   useEffect(() => {
     fetchDataListTicket();
-  }, []);
+  }, [router]);
   return (
     <>
       {/* {contextHolder} */}

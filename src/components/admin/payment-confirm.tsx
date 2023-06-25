@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag } from 'antd';
+import { Button, Table, Tag, notification } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { AllPayment, getListPaymentConfirm } from './fetcher';
+import {
+  AllPayment,
+  getListPaymentConfirm,
+  postPaymentConfirm,
+} from './fetcher';
 import { formatDateTime } from '@/utils/format';
-
+import { CheckOutlined } from '@ant-design/icons';
 export default function CONFIRM_PAYMENT() {
-  // const [notiApi, contextHolder] = notification.useNotification();
+  const [notiApi, contextHolder] = notification.useNotification();
 
   const [data, setData] = useState<AllPayment[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const columns: ColumnsType<AllPayment> = [
     {
       title: 'Mã người dùng',
@@ -52,12 +57,51 @@ export default function CONFIRM_PAYMENT() {
           <Tag color="#87d068">{value}</Tag>
         ),
     },
+    {
+      dataIndex: ['userId', 'keyPayment'],
+      key: 'status',
+      align: 'center',
+      render: (_, keyPayment) => (
+        <Button
+          icon={<CheckOutlined />}
+          onClick={() => handleConfirm(_, keyPayment)}
+          loading={isLoading}
+        ></Button>
+      ),
+    },
   ];
 
+  const handleConfirm = (_: any, keyPayment: AllPayment) => {
+    setIsLoading(true);
+    const dataPostPayment = {
+      userId: keyPayment.userId,
+      keyConfirm: keyPayment.keyPayment,
+    };
+    postPaymentConfirm(dataPostPayment)
+      .then(() => {
+        notiApi.success({
+          message: '',
+          description: 'Thành công',
+          placement: 'topRight',
+          duration: 3,
+        });
+        fetchDataListTicket();
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        notiApi.error({
+          message: '',
+          description: 'Thất bại',
+          placement: 'topRight',
+          duration: 3,
+        });
+        setIsLoading(false);
+      });
+  };
   const fetchDataListTicket = () => {
     getListPaymentConfirm()
       .then((res) => {
-        console.log(res);
         setData(res.data);
         // setLoading(false);
       })
@@ -71,7 +115,7 @@ export default function CONFIRM_PAYMENT() {
   }, []);
   return (
     <>
-      {/* {contextHolder} */}
+      {contextHolder}
       <Table columns={columns} dataSource={data} />
     </>
   );

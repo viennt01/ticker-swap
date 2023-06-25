@@ -45,7 +45,7 @@ const AppHeader = () => {
     return {
       value: data.ticketName,
       title: (
-        <Text onClick={() => changePage(`/ticker-film/${data.ticketId}`)}>
+        <Text onClick={() => changePage(`/ticker-film/${data.id}`)}>
           {data.ticketName}
         </Text>
       ),

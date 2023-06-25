@@ -1,4 +1,4 @@
-import { get, ResponseWithPayload } from '@/fetcher';
+import { get, postLogin, ResponseWithPayload } from '@/fetcher';
 import { API_PAYMENT, API_TICKET, API_USER } from '@/fetcher/endpoint';
 export interface DataTicket {
   id: number;
@@ -28,6 +28,11 @@ export interface AllPayment {
   created: string;
 }
 
+export interface PaymentConfirm {
+  userId: number;
+  keyConfirm: string;
+}
+
 export const getListTicket = () => {
   return get<undefined, ResponseWithPayload<DataTicket[]>>({})(
     API_TICKET.GET_ALL_TICKETS
@@ -54,4 +59,10 @@ export const getListPaymentConfirm = () => {
   return get<undefined, ResponseWithPayload<AllPayment[]>>({})(
     API_PAYMENT.ALL_PAYMENT
   );
+};
+
+export const postPaymentConfirm = (data: PaymentConfirm) => {
+  return postLogin<PaymentConfirm, ResponseWithPayload<PaymentConfirm>>({
+    data,
+  })(API_PAYMENT.CONFIRM_PAYMENT_HANDLE);
 };

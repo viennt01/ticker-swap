@@ -31,4 +31,5 @@ export const API_PAYMENT = {
   REQUEST_PAYMENT: '/Payments/RequestPayment',
   ALL_PAYMENT: '/Payments/GetAll',
   CONFIRM_PAYMENT: '/Payments/GetAllNeedToConfirm',
+  CONFIRM_PAYMENT_HANDLE: '/Payments/ConfirmPayment',
 };
