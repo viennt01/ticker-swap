@@ -105,8 +105,8 @@ export const postLogin =
     const fetchPromise = requestWithTimeout(
       fetch(`${getGateway(gw)}${url}`, {
         headers: {
-          Accept: 'text/plain',
-          'Content-Type': 'application/json-patch+json',
+          Accept: '*/*',
+          'Content-Type': 'application/json',
         },
         ...options,
         method: 'POST',

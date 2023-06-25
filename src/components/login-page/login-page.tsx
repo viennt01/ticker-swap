@@ -44,11 +44,10 @@ export default function LoginPage() {
 
     login(data)
       .then((res) => {
-        if (res.message === 'Success') {
+        if (res.message === 'Thành Công') {
           console.log(res);
-
           appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.roleId);
-          appLocalStorage.set(LOCAL_STORAGE_KEYS.USER_ID, res.data.userId);
+          appLocalStorage.set(LOCAL_STORAGE_KEYS.USER_ID, res.data.id);
           router.push(ROUTERS.HOME);
           setIsLoading(false);
           return;

@@ -15,14 +15,16 @@ import {
   GoogleOutlined,
   AppleOutlined,
 } from '@ant-design/icons';
-import { LoginData } from './fetcher';
-import { ChangeEvent, useState } from 'react';
+import { LoginData, login } from './fetcher';
+import { useState } from 'react';
 const initialValues = {
-  UserName: '',
-  Password: '',
-  PhoneNumber: '',
-  FulName: '',
-  Address: '',
+  userName: '',
+  password: '',
+  phoneNumber: '',
+  fulName: '',
+  address: '',
+  accountBankingNumber: '',
+  bankingName: '',
 };
 
 export default function RegisterPage() {
@@ -30,35 +32,22 @@ export default function RegisterPage() {
   const router = useRouter();
   const [notiApi, contextHolder] = notification.useNotification();
   const { Text, Title, Link } = Typography;
-  const [dataImage, setDataImage] = useState<any>('');
   const onFinish = (values: LoginData) => {
-    if (dataImage.size / 1024 / 1024 > 5) {
-      notiApi.error({
-        message: '',
-        description: 'Vui lòng chọn ảnh có dung lượng nhỏ hơn 5MB',
-        placement: 'topRight',
-        duration: 3,
-      });
-      return;
-    }
-    const formdata = new FormData();
-    formdata.append('File', dataImage);
-    formdata.append('UserName', values.UserName);
-    formdata.append('Password', values.Password);
-    formdata.append('PhoneNumber', values.PhoneNumber);
-    formdata.append('FulName', values.FulName);
-    formdata.append('Address', values.Address);
+    const data = {
+      userName: values.userName,
+      password: values.password,
+      phoneNumber: values.phoneNumber,
+      fulName: values.fulName,
+      address: values.address,
+      accountBankingNumber: values.accountBankingNumber,
+      bankingName: values.bankingName,
+    };
 
-    fetch('http://ticketswap.somee.com/api/User/Register', {
-      method: 'POST',
-      body: formdata,
-      redirect: 'follow',
-    })
-      .then((response) => response.text())
+    login(data)
       .then((res) => {
         console.log(res);
 
-        if (res === '{"data":true,"status":true,"message":"Success"}') {
+        if (res.message === 'Thành Công') {
           notiApi.success({
             message: '',
             description: 'Đăng ký thành công',
@@ -66,7 +55,7 @@ export default function RegisterPage() {
             duration: 3,
           });
           setIsLoading(false);
-          router.push('/');
+          router.push('/login');
           return;
         }
         notiApi.error({
@@ -94,13 +83,6 @@ export default function RegisterPage() {
 
   const changePageHome = () => {
     router.push('/');
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      setDataImage(file);
-    }
   };
 
   return (
@@ -149,7 +131,7 @@ export default function RegisterPage() {
                   autoComplete="off"
                 >
                   <Form.Item
-                    name="FulName"
+                    name="fulName"
                     rules={[
                       {
                         required: true,
@@ -164,7 +146,7 @@ export default function RegisterPage() {
                   </Form.Item>
 
                   <Form.Item
-                    name="PhoneNumber"
+                    name="phoneNumber"
                     rules={[
                       {
                         required: true,
@@ -179,7 +161,7 @@ export default function RegisterPage() {
                   </Form.Item>
 
                   <Form.Item
-                    name="Address"
+                    name="address"
                     rules={[
                       {
                         required: true,
@@ -189,20 +171,37 @@ export default function RegisterPage() {
                   >
                     <Input size="large" placeholder="Nhập địa chỉ của bạn" />
                   </Form.Item>
-
                   <Form.Item
-                    name="File"
-                    // valuePropName="fileList"
-                    // getValueFromEvent={normFile}
+                    name="bankingName"
                     rules={[
-                      { required: true, message: 'Please upload a file' },
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập tên ngân hàng của bạn!',
+                      },
                     ]}
                   >
-                    <input type="file" onChange={handleChange} />
+                    <Input
+                      size="large"
+                      placeholder="Nhập tên ngân hàng của bạn"
+                    />
                   </Form.Item>
-                  {/* <img src={imagePreview} alt="Thumb" /> */}
                   <Form.Item
-                    name="UserName"
+                    name="accountBankingNumber"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập số tài khoản của bạn!',
+                      },
+                    ]}
+                  >
+                    <Input
+                      size="large"
+                      placeholder="Nhập số tài khoản của bạn"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="userName"
                     rules={[
                       {
                         required: true,
@@ -217,7 +216,7 @@ export default function RegisterPage() {
                   </Form.Item>
 
                   <Form.Item
-                    name="Password"
+                    name="password"
                     rules={[
                       {
                         required: true,

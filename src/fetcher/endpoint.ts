@@ -3,8 +3,8 @@ export const UPLOAD = {
 };
 
 export const API_AUTHENTICATE = {
-  LOGIN: '/User/Login',
-  REGISTER: '/User/Register',
+  LOGIN: '/Users/Login',
+  REGISTER: '/Users/Register',
 };
 
 export const API_TICKET = {
