@@ -117,7 +117,7 @@ export default function RegisterPage() {
               </Col>
               <Col span={8}>
                 <Title italic level={3}>
-                  coinmap
+                  TickSwap
                 </Title>
               </Col>
             </Row>

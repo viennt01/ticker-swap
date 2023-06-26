@@ -57,7 +57,7 @@ export const getListPaymentAll = () => {
 
 export const getListPaymentConfirm = () => {
   return get<undefined, ResponseWithPayload<AllPayment[]>>({})(
-    API_PAYMENT.ALL_PAYMENT
+    API_PAYMENT.CONFIRM_PAYMENT
   );
 };
 
