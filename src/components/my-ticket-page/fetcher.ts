@@ -13,9 +13,12 @@ export interface DataTicket {
   addressBuy: string;
   timeUse: string;
 }
+export interface dataSend {
+  id: number;
+}
 
-export const getListMyTicket = (data: number) => {
-  return postLogin<number, ResponseWithPayload<DataTicket[]>>({ data })(
+export const getListMyTicket = (data: dataSend) => {
+  return postLogin<dataSend, ResponseWithPayload<DataTicket[]>>({ data })(
     API_TICKET.GET_TICKET_BY_USER_ID
   );
 };

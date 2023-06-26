@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { DataTicket, getListMyTicket } from './fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
+import { STATUS_CODE } from '@/constant/error-code';
 export default function MyTicketPage() {
   const { Title, Text } = Typography;
   const router = useRouter();
@@ -21,11 +22,12 @@ export default function MyTicketPage() {
   const [idUser, setIdUser] = useState<any>();
 
   const fetchData = () => {
-    console.log(idUser);
-
-    getListMyTicket(idUser)
+    const dataSend = {
+      id: Number(idUser),
+    };
+    getListMyTicket(dataSend)
       .then((res) => {
-        if (res.status) {
+        if (res.message === STATUS_CODE.SUCCESS) {
           setData(res.data);
           setLoading(false);
         }

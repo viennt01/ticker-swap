@@ -12,13 +12,13 @@ export const API_TICKET = {
   GET_TICKET_BY_ID: '/Tickets/GetDetailById',
   GET_ALL_TICKETS: '/Tickets/GetAll',
   GET_ALL_TICKETS_SELL: '/Tickets/GetAllSelled',
-  GET_TICKET_BY_USER_ID: '/Ticket/GetTicketByUserId',
-  GET_TICKET_BY_BUYER_ID: '/Ticket/GetTicketByBuyerId',
+  GET_TICKET_BY_USER_ID: '/Tickets/GetDetailByUserId',
 };
 
 export const API_USER = {
   GET_ALL: '/Users/GetAll',
   GET_USER_BY_ID: '/Users',
+  GET_TICKET_BY_BUYER_ID: '/Users/HistoryBuyByUserId',
 };
 export const API_ORDER = {
   ORDER: '/Carts/AddToCart',

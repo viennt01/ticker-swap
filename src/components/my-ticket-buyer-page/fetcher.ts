@@ -1,5 +1,5 @@
 import { postLogin, ResponseWithPayload } from '@/fetcher';
-import { API_TICKET } from '@/fetcher/endpoint';
+import { API_USER } from '@/fetcher/endpoint';
 export interface DataTicket {
   ticketId: number;
   ticketName: string;
@@ -12,8 +12,12 @@ export interface DataTicket {
   status: number;
 }
 
-export const getListMyTicketBuyer = (data: number) => {
-  return postLogin<number, ResponseWithPayload<DataTicket[]>>({ data })(
-    API_TICKET.GET_TICKET_BY_BUYER_ID
+export interface dataSend {
+  id: number;
+}
+
+export const getListMyTicketBuyer = (data: dataSend) => {
+  return postLogin<dataSend, ResponseWithPayload<DataTicket[]>>({ data })(
+    API_USER.GET_TICKET_BY_BUYER_ID
   );
 };

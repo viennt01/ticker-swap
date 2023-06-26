@@ -21,9 +21,10 @@ export default function MyTicketBuyerPage() {
   const [idUser, setIdUser] = useState<any>();
 
   const fetchData = () => {
-    console.log(idUser);
-
-    getListMyTicketBuyer(idUser)
+    const dataSend = {
+      id: Number(idUser),
+    };
+    getListMyTicketBuyer(dataSend)
       .then((res) => {
         if (res.status) {
           setData(res.data);

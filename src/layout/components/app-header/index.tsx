@@ -15,7 +15,6 @@ import {
   ContainerOutlined,
   UserOutlined,
   ShoppingCartOutlined,
-  CommentOutlined,
   BellOutlined,
   CalendarOutlined,
   LogoutOutlined,
@@ -181,8 +180,8 @@ const AppHeader = () => {
                     }}
                     onClick={() => handleChangePageMyTicketBuy()}
                   >
-                    <ShoppingCartOutlined />
-                    Đơn hàng
+                    <ContainerOutlined />
+                    Đơn của bạn đã mua
                   </Button>
                 </Col>
                 <Col span={4}>
@@ -195,8 +194,8 @@ const AppHeader = () => {
                     }}
                     onClick={() => handleChangePageCart()}
                   >
-                    <CommentOutlined />
-                    Chat
+                    <ShoppingCartOutlined />
+                    Đơn hàng
                   </Button>
                 </Col>
                 {idUser ? (
