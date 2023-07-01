@@ -59,7 +59,7 @@ export default function PostTicketPage() {
     formdata.append('UserId', idUser); //
     formdata.append('TicketTypeId', values.ticket.TicketTypeId); //
 
-    fetch('http://ticketswap.somee.com/api/Tickets/Create', {
+    fetch('https://ticketswap.wiki/api/Tickets/Create', {
       method: 'POST',
       body: formdata,
       redirect: 'follow',
