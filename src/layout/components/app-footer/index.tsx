@@ -16,7 +16,7 @@ const AppFooter = () => {
       <Row gutter={14}>
         {/* Tải ứng dụng TickSwap */}
         <Col span={6}>
-          <Text strong>Tải ứng dụng TickSwap</Text>
+          <Text strong>Tải ứng dụng TicketSwap</Text>
           <Row style={{ marginTop: '16px' }}>
             <Col span={16}>
               <QRCode
@@ -90,7 +90,7 @@ const AppFooter = () => {
         </Col>
         {/* Về TickSwap */}
         <Col span={6}>
-          <Text strong>Về TickSwap</Text>
+          <Text strong>Về TicketSwap</Text>
           <Row style={{ marginTop: '16px' }}>
             <Col span={24}>
               <Text>Giới thiệu</Text>

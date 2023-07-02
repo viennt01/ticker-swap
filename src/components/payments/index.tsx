@@ -26,10 +26,9 @@ export default function PaymentPage() {
   const [codeTransaction, setCodeTransaction] = useState<string>('');
 
   const onFinishPrice = (values: any) => {
-    console.log(values);
     const dataRequestPayment = {
       userId: idUser,
-      price: values.price,
+      price: values.Price,
     };
     RequestPayment(dataRequestPayment)
       .then((res) => {
@@ -58,39 +57,12 @@ export default function PaymentPage() {
   const steps = [
     {
       title: 'Nhập số tiền bạn muốn nạp',
-      // content: (
-      //   <>
-      //     <Form name="nest-messages" onFinish={onFinishPrice}>
-      //       <Form.Item
-      //         name={['ticket', 'Price']}
-      //         rules={[
-      //           {
-      //             required: true,
-      //             message: 'Vui lòng nhập giá vé!!',
-      //           },
-      //         ]}
-      //       >
-      //         <InputNumber
-      //           size="large"
-      //           placeholder="Gía vé"
-      //           style={{ width: '200px', margin: '32px' }}
-      //           min={0}
-      //           formatter={(value) =>
-      //             `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-      //           }
-      //         />
-      //       </Form.Item>
-      //     </Form>
-      //   </>
-      // ),
     },
     {
       title: 'Nộp tiền',
-      // content: 'Second-content',
     },
     {
       title: 'Hoàn thành',
-      // content: 'Second-content',
     },
   ];
   useEffect(() => {
@@ -164,7 +136,7 @@ export default function PaymentPage() {
                         size="large"
                         placeholder="Gía vé"
                         style={{ width: '200px', margin: '32px' }}
-                        min={0}
+                        min={1}
                         formatter={(value) =>
                           `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                         }

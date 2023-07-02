@@ -198,7 +198,7 @@ export default function DetailTickerFilmPage() {
                     <Text>
                       {formatDateTime(
                         new Date(
-                          data?.timeUse || ''
+                          data?.created || ''
                         ).getTime() as unknown as Date
                       )}
                     </Text>

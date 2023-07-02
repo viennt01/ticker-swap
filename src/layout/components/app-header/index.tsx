@@ -296,7 +296,7 @@ const AppHeader = () => {
                   borderRadius: '9px',
                 }}
                 value={value}
-                placeholder="Tìm kiếm trên TickSwap"
+                placeholder="Tìm kiếm trên TicketSwap"
                 allowClear
                 treeDefaultExpandAll
                 onChange={onChange}

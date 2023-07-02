@@ -111,13 +111,13 @@ export default function RegisterPage() {
                     <Title level={3}>Đăng ký</Title>
                   </Col>
                   <Col span={24}>
-                    <Text>Tạo tài khoản TickSwap ngay</Text>
+                    <Text>Tạo tài khoản TicketSwap ngay</Text>
                   </Col>
                 </Row>
               </Col>
               <Col span={8}>
                 <Title italic level={3}>
-                  TickSwap
+                  TicketSwap
                 </Title>
               </Col>
             </Row>

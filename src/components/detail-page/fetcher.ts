@@ -11,6 +11,7 @@ export interface DataTicket {
   userId: number;
   addressBuy: string;
   timeUse: string;
+  created: string;
 }
 export interface dataByTicket {
   id: number;

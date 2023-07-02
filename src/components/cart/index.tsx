@@ -273,7 +273,7 @@ export default function CartPage() {
               }}
             >
               Bằng việc bấm Đặt hàng, bạn đã đọc, hiểu rõ và đồng ý với Chính
-              sách mua hàng của TickSwap
+              sách mua hàng của TicketSwap
             </Text>
             <Row gutter={32} style={{ margin: '32px' }}>
               <Col span={8}>
