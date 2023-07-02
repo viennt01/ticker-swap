@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Col,
   Layout,
@@ -64,9 +64,12 @@ const AppHeader = () => {
         console.log(err);
       });
   };
+  useMemo(() => {
+    fetchDataListTicket();
+  }, [idUser]);
   useEffect(() => {
     setRole(appLocalStorage.get('role'));
-    fetchDataListTicket();
+    // fetchDataListTicket();
   }, [idUser, router]);
   const handleLogout = () => {
     localStorage.clear();

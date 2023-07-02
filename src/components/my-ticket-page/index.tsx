@@ -1,4 +1,4 @@
-import { formatCurrency } from '@/utils/format';
+import { formatCurrency, formatDateTime } from '@/utils/format';
 import {
   Breadcrumb,
   Col,
@@ -93,11 +93,17 @@ export default function MyTicketPage() {
                           src={`data:image/png;base64,${item.avatar}`}
                         />
                       }
-                      title={<a href="https://ant.design">{item.ticketName}</a>}
+                      title={item.ticketName}
                       description={
                         <>
                           <Text>{item.addressBuy}</Text>
-                          <div>{item.timeUse}</div>
+                          <div>
+                            {formatDateTime(
+                              new Date(
+                                item.timeUse
+                              ).getTime() as unknown as Date
+                            )}
+                          </div>
                         </>
                       }
                     />

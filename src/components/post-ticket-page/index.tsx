@@ -15,7 +15,6 @@ import {
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { appLocalStorage } from '@/utils/localstorage';
-import { STATUS_CODE } from '@/constant/error-code';
 
 export default function PostTicketPage() {
   const [isPersonal, setIsPersonal] = useState(true);
@@ -31,21 +30,35 @@ export default function PostTicketPage() {
     wrapperCol: { span: 24 },
   };
 
-  // const handleCancel = () => setPreviewOpen(false);
   const [notiApi, contextHolder] = notification.useNotification();
   const [dataImage, setDataImage] = useState<any>('');
 
   const onFinish = (values: any) => {
     setLoading(true);
-    // const dataTimeUse = `${values.ticket.TimeUse['$y']}-${
-    //   values.ticket.TimeUse['$M'] + 1
-    // }-${values.ticket.TimeUse['$D']}T${values.ticket.TimeUse['$H']}:${
-    //   values.ticket.TimeUse['$m']
-    // }:${values.ticket.TimeUse['$s']}.${values.ticket.TimeUse['$ms']}`;
-    const dataTimeUse = values.ticket.TimeUse.valueOf();
+    const lastMonth = values.ticket.TimeUse['$M'] + 1;
+    const month =
+      lastMonth.toString().length === 1 ? `0${lastMonth}` : lastMonth;
+    const day =
+      values.ticket.TimeUse['$D'].toString().length === 1
+        ? `0${values.ticket.TimeUse['$D']}`
+        : values.ticket.TimeUse['$D'];
+    const hour =
+      values.ticket.TimeUse['$H'].toString().length === 1
+        ? `0${values.ticket.TimeUse['$H']}`
+        : values.ticket.TimeUse['$H'];
+    const minute =
+      values.ticket.TimeUse['$m'].toString().length === 1
+        ? `0${values.ticket.TimeUse['$m']}`
+        : values.ticket.TimeUse['$m'];
+    const second =
+      values.ticket.TimeUse['$s'].toString().length === 1
+        ? `0${values.ticket.TimeUse['$s']}`
+        : values.ticket.TimeUse['$s'];
+    const dataTimeUse = `${values.ticket.TimeUse['$y']}-${month}-${day}T${hour}:${minute}:${second}.1111111`;
+
     const formdata = new FormData();
     formdata.append('TicketName', values.ticket.TicketName); //
-    formdata.append('TicketCode', values.ticket.TicketName); //
+    formdata.append('TicketCode', values.ticket.TicketCode); //
     formdata.append('Description', values.ticket.Description); //
     formdata.append('AvatarTicket', dataImage); //
     formdata.append('Price', values.ticket.Price); //
@@ -65,25 +78,14 @@ export default function PostTicketPage() {
       redirect: 'follow',
     })
       .then((response) => response.text())
-      .then((res: any) => {
-        console.log(res);
-        if (res.message === STATUS_CODE.SUCCESS) {
-          notiApi.success({
-            message: '',
-            description: 'Thêm vé thành công',
-            placement: 'topRight',
-            duration: 3,
-          });
-          router.push('/');
-          setLoading(false);
-          return;
-        }
-        notiApi.error({
+      .then(() => {
+        notiApi.success({
           message: '',
-          description: 'Thêm vé thất bại',
+          description: 'Thêm vé thành công',
           placement: 'topRight',
           duration: 3,
         });
+        router.push('/');
         setLoading(false);
         return;
       })
@@ -144,7 +146,7 @@ export default function PostTicketPage() {
                     <Title level={3} style={{ marginBottom: '16px' }}>
                       Hình ảnh của sản phẩm
                     </Title>
-                    <Text>Xem thêm về Quy định đăng tin của TickSwap</Text>
+                    <Text>Xem thêm về Quy định đăng tin của TicketSwap</Text>
                   </Col>
                   <Col span={24}>
                     <input type="file" onChange={handleChangeFile} />
@@ -185,6 +187,17 @@ export default function PostTicketPage() {
                     ]}
                   >
                     <Input size="large" placeholder="Tiêu đề" />
+                  </Form.Item>
+                  <Form.Item
+                    name={['ticket', 'TicketCode']}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập mã check in',
+                      },
+                    ]}
+                  >
+                    <Input size="large" placeholder="Mã check in" />
                   </Form.Item>
                   <Row>
                     <Col span={6}>

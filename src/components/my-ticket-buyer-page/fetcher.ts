@@ -10,6 +10,7 @@ export interface DataTicket {
   price: number;
   userId: number;
   status: number;
+  timeUse: string;
 }
 
 export interface dataSend {

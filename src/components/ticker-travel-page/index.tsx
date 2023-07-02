@@ -173,7 +173,7 @@ export default function TicketTravelPage() {
     login(data)
       .then((res) => {
         if (res.message === STATUS_CODE.SUCCESS) {
-          setData(res.data);
+          setData(res.data.filter((item) => item.status === 'Còn vé'));
           setLoading(false);
         }
       })

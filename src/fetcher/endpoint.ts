@@ -12,6 +12,7 @@ export const API_TICKET = {
   GET_TICKET_BY_ID: '/Tickets/GetDetailById',
   GET_ALL_TICKETS: '/Tickets/GetAll',
   GET_ALL_TICKETS_SELL: '/Tickets/GetAllSelled',
+  GET_ALL_TICKETS_SELLING: '/Tickets/GetAllSelling',
   GET_TICKET_BY_USER_ID: '/Tickets/GetDetailByUserId',
 };
 

@@ -20,6 +20,6 @@ export interface DataTicket {
 
 export const getListTicket = () => {
   return get<undefined, ResponseWithPayload<DataTicket[]>>({})(
-    API_TICKET.GET_ALL_TICKETS
+    API_TICKET.GET_ALL_TICKETS_SELLING
   );
 };

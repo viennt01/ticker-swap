@@ -14,7 +14,7 @@ const AppFooter = () => {
   return (
     <Footer className={style.appFooterWrapper}>
       <Row gutter={14}>
-        {/* Tải ứng dụng TickSwap */}
+        {/* Tải ứng dụng TicketSwap */}
         <Col span={6}>
           <Text strong>Tải ứng dụng TicketSwap</Text>
           <Row style={{ marginTop: '16px' }}>
@@ -88,7 +88,7 @@ const AppFooter = () => {
             </Col>
           </Row>
         </Col>
-        {/* Về TickSwap */}
+        {/* Về TicketSwap */}
         <Col span={6}>
           <Text strong>Về TicketSwap</Text>
           <Row style={{ marginTop: '16px' }}>

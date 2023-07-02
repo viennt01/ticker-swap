@@ -9,6 +9,7 @@ export interface DataTicket {
   avatar: string;
   price: number;
   userId: number;
+  status: string;
 }
 export interface dataByTicket {
   id: number;

@@ -1,4 +1,4 @@
-import { formatCurrency } from '@/utils/format';
+import { formatCurrency, formatDateTime } from '@/utils/format';
 import {
   Breadcrumb,
   Col,
@@ -6,8 +6,8 @@ import {
   Typography,
   Card,
   List,
-  Image,
   Spin,
+  QRCode,
 } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -20,16 +20,14 @@ export default function MyTicketBuyerPage() {
   const [data, setData] = useState<DataTicket[]>([]);
   const [idUser, setIdUser] = useState<any>();
 
-  const fetchData = () => {
+  const fetchData = async () => {
     const dataSend = {
       id: Number(idUser),
     };
-    getListMyTicketBuyer(dataSend)
+    await getListMyTicketBuyer(dataSend)
       .then((res) => {
-        if (res.status) {
-          setData(res.data);
-          setLoading(false);
-        }
+        setData(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log('err', err);
@@ -39,7 +37,7 @@ export default function MyTicketBuyerPage() {
   useEffect(() => {
     fetchData();
     setIdUser(appLocalStorage.get('idUser'));
-  }, [idUser, router]);
+  }, [idUser, router, loading]);
 
   const changePageHome = () => {
     router.push('/');
@@ -84,16 +82,11 @@ export default function MyTicketBuyerPage() {
                 renderItem={(item) => (
                   <List.Item key={item.ticketId}>
                     <List.Item.Meta
-                      avatar={
-                        <Image
-                          alt="image"
-                          width={272}
-                          height={200}
-                          src={`data:image/png;base64,${item.avatar}`}
-                        />
-                      }
-                      title={<a href="https://ant.design">{item.ticketName}</a>}
-                      description={item.status}
+                      avatar={<QRCode value={item.ticketCode} />}
+                      title={item.ticketName}
+                      description={formatDateTime(
+                        new Date(item.timeUse).getTime() as unknown as Date
+                      )}
                     />
                     <Text strong type="danger">
                       {formatCurrency(item.price)}

@@ -25,7 +25,6 @@ export default function NewPost() {
   useEffect(() => {
     fetchDataListTicket();
   }, []);
-  console.log('data', data);
 
   return (
     <div style={{ marginBottom: '64px' }}>

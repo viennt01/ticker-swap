@@ -9,6 +9,7 @@ import {
   Col,
   Typography,
   Breadcrumb,
+  Select,
 } from 'antd';
 import {
   FacebookOutlined,
@@ -16,7 +17,7 @@ import {
   AppleOutlined,
 } from '@ant-design/icons';
 import { LoginData, login } from './fetcher';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const initialValues = {
   userName: '',
   password: '',
@@ -29,6 +30,7 @@ const initialValues = {
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [dataBank, setDataBank] = useState([]);
   const router = useRouter();
   const [notiApi, contextHolder] = notification.useNotification();
   const { Text, Title, Link } = Typography;
@@ -76,7 +78,17 @@ export default function RegisterPage() {
         setIsLoading(false);
       });
   };
-
+  const listBank = () => {
+    const myHeaders = new Headers();
+    fetch('https://api.vietqr.io/v2/banks', {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    })
+      .then((response) => response.text())
+      .then((result) => setDataBank(JSON.parse(result).data))
+      .catch((error) => console.log('error', error));
+  };
   const handleChangePage = () => {
     router.push('/login');
   };
@@ -84,6 +96,17 @@ export default function RegisterPage() {
   const changePageHome = () => {
     router.push('/');
   };
+
+  useEffect(() => {
+    listBank();
+  }, []);
+  console.log(
+    'dataBank',
+    dataBank.map((c: any) => ({
+      value: c.shortName,
+      label: c.shortName,
+    }))
+  );
 
   return (
     <>
@@ -176,12 +199,18 @@ export default function RegisterPage() {
                     rules={[
                       {
                         required: true,
-                        message: 'Vui lòng nhập tên ngân hàng của bạn!',
+                        message: 'Vui lòng chọn tên ngân hàng của bạn!',
                       },
                     ]}
                   >
-                    <Input
+                    <Select
                       size="large"
+                      options={dataBank.map((c: any) => ({
+                        value: c.shortName,
+                        label: c.shortName,
+                      }))}
+                      allowClear
+                      showSearch
                       placeholder="Nhập tên ngân hàng của bạn"
                     />
                   </Form.Item>
@@ -272,7 +301,7 @@ export default function RegisterPage() {
                 >
                   Điều khoản sử dụng
                 </Link>{' '}
-                của TickSwap
+                của TicketSwap
               </Col>
               <Col
                 span={24}
