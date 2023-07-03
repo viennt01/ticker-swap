@@ -8,7 +8,7 @@ function Login() {
   return (
     <>
       <Head>
-        <title>Ticker Swap | Register</title>
+        <title>Ticket Swap | Register</title>
       </Head>
       <main className={inter.className}>
         <RegisterPage />

@@ -8,7 +8,7 @@ function TickerTravel() {
   return (
     <>
       <Head>
-        <title>Ticker Swap | Sport</title>
+        <title>Ticket Swap | Sport</title>
       </Head>
       <main className={inter.className}>
         <TicketTravelPage />

@@ -8,7 +8,7 @@ function Admin() {
   return (
     <>
       <Head>
-        <title>Ticker Swap | Admin</title>
+        <title>Ticket Swap | Admin</title>
       </Head>
       <main className={inter.className}>
         <AdminPage />

@@ -8,7 +8,7 @@ function MyTicket() {
   return (
     <>
       <Head>
-        <title>Ticker Swap | Cart</title>
+        <title>Ticket Swap | Cart</title>
       </Head>
       <main className={inter.className}>
         <CartPage />

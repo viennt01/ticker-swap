@@ -8,7 +8,7 @@ function Transaction() {
   return (
     <>
       <Head>
-        <title>Ticker Swap | Transaction</title>
+        <title>Ticket Swap | Transaction</title>
       </Head>
       <main className={inter.className}>
         <PostTicketPage />

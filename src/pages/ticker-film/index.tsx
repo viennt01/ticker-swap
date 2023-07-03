@@ -8,7 +8,7 @@ function TickerFilm() {
   return (
     <>
       <Head>
-        <title>Ticker Swap | Film</title>
+        <title>Ticket Swap | Film</title>
       </Head>
       <main className={inter.className}>
         <TickerFilmPage />

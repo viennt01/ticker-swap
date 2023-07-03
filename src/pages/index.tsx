@@ -8,7 +8,7 @@ function Home() {
   return (
     <>
       <Head>
-        <title>Ticker Swap | Home</title>
+        <title>Ticket Swap | Home</title>
       </Head>
       <main className={inter.className}>
         <HomePage />
