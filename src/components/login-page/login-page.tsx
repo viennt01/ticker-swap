@@ -24,6 +24,7 @@ const initialValues: LoginData = {
   userName: '',
   password: '',
 };
+import style from './index.module.scss';
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +85,7 @@ export default function LoginPage() {
   return (
     <>
       {contextHolder}
-      <Row>
+      <Row className={style.wrapper}>
         <Col span={24} style={{ marginBottom: '24px' }}>
           <Breadcrumb
             separator="->"
@@ -98,20 +99,24 @@ export default function LoginPage() {
             ]}
           />
         </Col>
-        <Col span={24} style={{ display: 'flex', justifyContent: 'center' }}>
+        <Col
+          span={24}
+          style={{ display: 'flex', justifyContent: 'center' }}
+          className={style.formLogin}
+        >
           <Card style={{ height: '580px', width: '545px' }}>
-            <Row style={{ marginBottom: '24px' }}>
-              <Col span={16}>
+            <Row className={style.header}>
+              <Col span={24} className={style.headerLeft}>
                 <Row>
-                  <Col span={24}>
+                  <Col span={24} className={style.title}>
                     <Title level={3}>Đăng nhập</Title>
                   </Col>
-                  <Col span={24}>
+                  <Col span={24} className={style.subTitle}>
                     <Text>Chào bạn quay lại</Text>
                   </Col>
                 </Row>
               </Col>
-              <Col span={8}>
+              <Col span={24} className={style.headerRight}>
                 <Title italic level={3}>
                   TicketSwap
                 </Title>
