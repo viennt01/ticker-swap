@@ -1,5 +1,51 @@
 @import '@/styles/color.scss';
+@import '@/styles/mixin.scss';
 
 .appFooterWrapper {
-    background-color: #D9D9D9;
+  background-color: #d9d9d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  .download {
+    display: none;
+  }
+  .customer {
+    display: none;
+  }
+  .about {
+    display: none;
+  }
+  .link {
+    width: 100%;
+    .icon {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+@include desktop-device {
+  .appFooterWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //   display: block;
+
+    .download {
+      display: block;
+    }
+    .customer {
+      display: block;
+    }
+    .about {
+      display: block;
+    }
+    .link {
+      display: block;
+      .icon {
+        // display: block;
+      }
+    }
+  }
 }

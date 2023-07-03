@@ -13,10 +13,12 @@ const { Footer } = Layout;
 const AppFooter = () => {
   return (
     <Footer className={style.appFooterWrapper}>
-      <Row gutter={14}>
+      <Row gutter={14} style={{ width: '100%' }}>
         {/* Tải ứng dụng TicketSwap */}
-        <Col span={6}>
-          <Text strong>Tải ứng dụng TicketSwap</Text>
+        <Col span={24} lg={6} className={style.download}>
+          <Text strong style={{ display: 'block' }}>
+            Tải ứng dụng TicketSwap
+          </Text>
           <Row style={{ marginTop: '16px' }}>
             <Col span={16}>
               <QRCode
@@ -60,76 +62,180 @@ const AppFooter = () => {
           </Row>
         </Col>
         {/* Hỗ trợ khách hàng */}
-        <Col span={6}>
-          <Text strong>Hỗ trợ khách hàng</Text>
-          <Row style={{ marginTop: '16px' }}>
-            <Col span={24}>
-              <Text>Trung tâm trợ giúp</Text>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: '8px' }}>
-            <Col span={24}>
-              <Text>An toàn mua bán</Text>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: '8px' }}>
-            <Col span={24}>
-              <Text>Quy định cần biết</Text>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: '8px' }}>
-            <Col span={24}>
-              <Text>Quy chế quyền riêng tư</Text>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: '8px' }}>
-            <Col span={24}>
-              <Text>Liên hệ hỗ trợ</Text>
-            </Col>
-          </Row>
+        <Col span={24} lg={6} className={style.customer}>
+          <Text
+            strong
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '10px',
+            }}
+          >
+            Hỗ trợ khách hàng
+          </Text>
+          <div>
+            <Row
+              style={{
+                marginTop: '16px',
+              }}
+            >
+              <Col span={24}>
+                <Text
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  Trung tâm trợ giúp
+                </Text>
+              </Col>
+            </Row>
+            <Row style={{ marginTop: '8px', display: 'block' }}>
+              <Col span={24}>
+                <Text
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  An toàn mua bán
+                </Text>
+              </Col>
+            </Row>
+            <Row style={{ marginTop: '8px', display: 'block' }}>
+              <Col span={24}>
+                <Text
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  Quy định cần biết
+                </Text>
+              </Col>
+            </Row>
+            <Row style={{ marginTop: '8px', display: 'block' }}>
+              <Col span={24}>
+                <Text
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  Quy chế quyền riêng tư
+                </Text>
+              </Col>
+            </Row>
+            <Row style={{ marginTop: '8px', display: 'block' }}>
+              <Col span={24}>
+                <Text
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  Liên hệ hỗ trợ
+                </Text>
+              </Col>
+            </Row>
+          </div>
         </Col>
         {/* Về TicketSwap */}
-        <Col span={6}>
-          <Text strong>Về TicketSwap</Text>
+        <Col span={24} lg={6} className={style.about}>
+          <Text
+            strong
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '10px',
+            }}
+          >
+            Về TicketSwap
+          </Text>
           <Row style={{ marginTop: '16px' }}>
             <Col span={24}>
-              <Text>Giới thiệu</Text>
+              <Text
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Giới thiệu
+              </Text>
             </Col>
           </Row>
           <Row style={{ marginTop: '8px' }}>
             <Col span={24}>
-              <Text>Tuyển dụng</Text>
+              <Text
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Tuyển dụng
+              </Text>
             </Col>
           </Row>
           <Row style={{ marginTop: '8px' }}>
             <Col span={24}>
-              <Text>Truyền thông</Text>
+              <Text
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Truyền thông
+              </Text>
             </Col>
           </Row>
           <Row style={{ marginTop: '8px' }}>
             <Col span={24}>
-              <Text>Blog</Text>
+              <Text
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Blog
+              </Text>
             </Col>
           </Row>
         </Col>
         {/* Liên kết */}
-        <Col span={6}>
-          <Text strong>Liên kết</Text>
-          <Row gutter={16}>
-            <Col span={8}>
+        <Col span={24} lg={6} className={style.link}>
+          <Text
+            strong
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '10px',
+            }}
+          >
+            Liên hệ
+          </Text>
+          <div className={style.icon}>
+            <a href="https://www.facebook.com/profile.php?id=100092463981969">
               <YoutubeOutlined style={{ fontSize: '50px' }} />
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={8}>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100092463981969">
               <FacebookOutlined style={{ fontSize: '50px' }} />
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={8}>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100092463981969">
               <LinkedinOutlined style={{ fontSize: '50px' }} />
-            </Col>
-          </Row>
+            </a>
+          </div>
         </Col>
       </Row>
     </Footer>
