@@ -59,7 +59,9 @@ export default function NewPost() {
               return (
                 <Col
                   key={data.id}
-                  span={8}
+                  span={24}
+                  lg={8}
+                  md={12}
                   style={{
                     marginBottom: '24px',
                   }}
