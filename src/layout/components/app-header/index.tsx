@@ -8,6 +8,8 @@ import {
   TreeSelect,
   Typography,
   Dropdown,
+  Menu,
+  Drawer,
 } from 'antd';
 import style from './index.module.scss';
 import {
@@ -21,12 +23,12 @@ import {
   LoginOutlined,
   ContactsOutlined,
   DesktopOutlined,
+  MenuFoldOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useRouter } from 'next/router';
 import { appLocalStorage } from '@/utils/localstorage';
 import { DataTicket, getListTicket } from './fetcher';
-
 const { Header } = Layout;
 const { Text } = Typography;
 
@@ -36,6 +38,8 @@ const AppHeader = () => {
   const [idUser, setIdUser] = useState<string>();
   const [data, setData] = useState<DataTicket[]>([]);
   const [role, setRole] = useState<string>('');
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [activePath, setActivePath] = useState('/');
 
   const onChange = (newValue: string) => {
     setValue(newValue);
@@ -76,6 +80,7 @@ const AppHeader = () => {
     router.push('/login');
   };
   const handleLogin = () => {
+    setShowMobileMenu(false);
     router.push('/login');
   };
   const handleRegister = () => {
@@ -126,205 +131,367 @@ const AppHeader = () => {
     },
   ];
   useEffect(() => {
+    const pathname = router.pathname;
+    setActivePath(pathname);
+  }, [router]);
+  useEffect(() => {
     setIdUser(appLocalStorage.get('idUser'));
   }, [idUser, router]);
+  const menuItemAuthorized = [
+    {
+      key: '/',
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          Trang chủ
+          <HomeOutlined />
+        </div>
+      ),
+    },
+    {
+      key: '/my-ticket',
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          Quản lý đơn
+          <ContainerOutlined />
+        </div>
+      ),
+    },
+    {
+      key: '/my-ticket-buyer',
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          Đơn của bạn đã mua
+          <ContainerOutlined />
+        </div>
+      ),
+    },
+    {
+      key: '/cart',
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          Đơn hàng
+          <ShoppingCartOutlined />
+        </div>
+      ),
+    },
+    {
+      key: '/information',
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          Tài khoản
+          <UserOutlined />
+        </div>
+      ),
+    },
+  ];
+  const menuItemAdmin = [
+    {
+      key: '/admin',
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          Admin
+          <DesktopOutlined />
+        </div>
+      ),
+    },
+  ];
+  const menuItemNoLogin = [
+    {
+      key: '/login',
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          Đăng nhập
+          <LoginOutlined />
+        </div>
+      ),
+    },
+    {
+      key: '/register',
+      label: (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          Đăng ký
+          <ContactsOutlined />
+        </div>
+      ),
+    },
+  ];
 
+  const handleMenu = () => {
+    if (role === '2') {
+      return menuItemAuthorized;
+    } else if (role === '1') {
+      return menuItemAdmin;
+    } else {
+      return menuItemNoLogin;
+    }
+  };
+
+  const handleClickMenu: MenuProps['onClick'] = (e) => {
+    switch (e.key) {
+      case '#': {
+        break;
+      }
+      default: {
+        router.push(e.key);
+        setShowMobileMenu(false);
+      }
+    }
+  };
   return (
     <Header className={style.appHeader}>
-      <Row>
-        <Col span={24} className={style.headerFirst}>
-          <Row>
-            <Col span={4} className={style.logo}>
+      <Col span={24} className={style.headerFirst}>
+        <div className={style.logo}>
+          <Image
+            preview={false}
+            style={{ cursor: 'pointer', width: '75px', height: '53px' }}
+            src="/images/logo.png"
+            onClick={() => handleHome()}
+            alt="logo"
+          />
+        </div>
+        <div className={style.menu}>
+          <div style={{ display: 'flex' }}>
+            <div style={{ display: role === '1' ? 'none' : 'block' }}>
+              <Button
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: '#E8CA2B',
+                  border: 'none',
+                }}
+                onClick={() => handleHome()}
+              >
+                <HomeOutlined />
+                Trang chủ
+              </Button>
+            </div>
+            <div style={{ display: role === '2' ? 'block' : 'none' }}>
+              <Button
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: '#E8CA2B',
+                  border: 'none',
+                }}
+                onClick={() => handleChangePageMyTicket()}
+              >
+                <ContainerOutlined />
+                Quản lý đơn bán
+              </Button>
+            </div>
+            <div style={{ display: role === '2' ? 'block' : 'none' }}>
+              <Button
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: '#E8CA2B',
+                  border: 'none',
+                }}
+                onClick={() => handleChangePageMyTicketBuy()}
+              >
+                <ContainerOutlined />
+                Quản lý đơn mua
+              </Button>
+            </div>
+            <div style={{ display: role === '2' ? 'block' : 'none' }}>
+              <Button
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: '#E8CA2B',
+                  border: 'none',
+                }}
+                onClick={() => handleChangePageCart()}
+              >
+                <ShoppingCartOutlined />
+                Đơn hàng
+              </Button>
+            </div>
+            {idUser ? (
+              <>
+                {role === '2' ? (
+                  <div style={{ display: role === '2' ? 'block' : 'none' }}>
+                    <Button
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: '#E8CA2B',
+                        border: 'none',
+                      }}
+                    >
+                      <BellOutlined />
+                      Thông báo
+                    </Button>
+                  </div>
+                ) : (
+                  <div>
+                    <Button
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: '#E8CA2B',
+                        border: 'none',
+                      }}
+                      onClick={() => handleChangePageAdmin()}
+                    >
+                      <DesktopOutlined />
+                      Admin
+                    </Button>
+                  </div>
+                )}
+
+                <div style={{ backgroundColor: '#E8CA2B' }}>
+                  <Dropdown menu={{ items }} placement="bottomRight" arrow>
+                    <Button
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: '#E8CA2B',
+                        border: 'none',
+                      }}
+                    >
+                      <UserOutlined />
+                      Tài khoản
+                    </Button>
+                  </Dropdown>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <Button
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: '#E8CA2B',
+                      border: 'none',
+                    }}
+                    onClick={handleLogin}
+                  >
+                    <LoginOutlined />
+                    Đăng Nhập
+                  </Button>
+                </div>
+                <div style={{ backgroundColor: '#E8CA2B' }}>
+                  <Button
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: '#E8CA2B',
+                      border: 'none',
+                    }}
+                    onClick={handleRegister}
+                  >
+                    <ContactsOutlined />
+                    Đăng ký
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+        <MenuFoldOutlined
+          className={style.menuButton}
+          onClick={() => setShowMobileMenu(true)}
+        />
+        <Drawer
+          className={style.mobileMenuWrapper}
+          title={
+            <div className={style.mobileMenuTitle}>
               <Image
                 preview={false}
-                style={{ cursor: 'pointer', width: '75px', height: '53px' }}
+                style={{ cursor: 'pointer', width: '75px', height: '40px' }}
                 src="/images/logo.png"
                 onClick={() => handleHome()}
                 alt="logo"
               />
-            </Col>
-            <Col span={20} className={style.menu}>
-              <Row>
-                <Col span={4}>
-                  <Button
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: '#E8CA2B',
-                      border: 'none',
-                    }}
-                    onClick={() => handleHome()}
-                  >
-                    <HomeOutlined />
-                    Trang chủ
-                  </Button>
-                </Col>
-                <Col span={4}>
-                  <Button
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: '#E8CA2B',
-                      border: 'none',
-                    }}
-                    onClick={() => handleChangePageMyTicket()}
-                  >
-                    <ContainerOutlined />
-                    Quản lý đơn
-                  </Button>
-                </Col>
-                <Col span={4}>
-                  <Button
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: '#E8CA2B',
-                      border: 'none',
-                    }}
-                    onClick={() => handleChangePageMyTicketBuy()}
-                  >
-                    <ContainerOutlined />
-                    Đơn của bạn đã mua
-                  </Button>
-                </Col>
-                <Col span={4}>
-                  <Button
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: '#E8CA2B',
-                      border: 'none',
-                    }}
-                    onClick={() => handleChangePageCart()}
-                  >
-                    <ShoppingCartOutlined />
-                    Đơn hàng
-                  </Button>
-                </Col>
-                {idUser ? (
-                  <>
-                    {role === '2' ? (
-                      <Col span={4}>
-                        <Button
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: '#E8CA2B',
-                            border: 'none',
-                          }}
-                        >
-                          <BellOutlined />
-                          Thông báo
-                        </Button>
-                      </Col>
-                    ) : (
-                      <Col span={4}>
-                        <Button
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: '#E8CA2B',
-                            border: 'none',
-                          }}
-                          onClick={() => handleChangePageAdmin()}
-                        >
-                          <DesktopOutlined />
-                          Admin
-                        </Button>
-                      </Col>
-                    )}
-
-                    <Col span={4} style={{ backgroundColor: '#E8CA2B' }}>
-                      <Dropdown menu={{ items }} placement="bottomRight" arrow>
-                        <Button
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: '#E8CA2B',
-                            border: 'none',
-                          }}
-                        >
-                          <UserOutlined />
-                          Tài khoản
-                        </Button>
-                      </Dropdown>
-                    </Col>
-                  </>
-                ) : (
-                  <>
-                    <Col span={4}>
-                      <Button
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: '#E8CA2B',
-                          border: 'none',
-                        }}
-                        onClick={handleLogin}
-                      >
-                        <LoginOutlined />
-                        Đăng Nhập
-                      </Button>
-                    </Col>
-                    <Col span={4} style={{ backgroundColor: '#E8CA2B' }}>
-                      <Button
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          backgroundColor: '#E8CA2B',
-                          border: 'none',
-                        }}
-                        onClick={handleRegister}
-                      >
-                        <ContactsOutlined />
-                        Đăng ký
-                      </Button>
-                    </Col>
-                  </>
-                )}
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24} className={style.headerSecond}>
-          <Row>
-            <Col span={20}>
-              <TreeSelect
-                showSearch
-                style={{
-                  width: '100%',
-                  border: '1px solid',
-                  borderRadius: '9px',
-                }}
-                value={value}
-                placeholder="Tìm kiếm trên TicketSwap"
-                allowClear
-                treeDefaultExpandAll
-                onChange={onChange}
-                treeData={treeData}
-                size="large"
+            </div>
+          }
+          closeIcon={null}
+          placement="right"
+          zIndex={99999}
+          onClose={() => setShowMobileMenu(false)}
+          open={showMobileMenu}
+        >
+          <Row
+            style={{
+              flexDirection: 'column',
+              height: '100%',
+            }}
+          >
+            <Col flex={1}>
+              <Menu
+                className={style.mobileMenu}
+                mode="vertical"
+                selectedKeys={[activePath]}
+                items={handleMenu()}
+                onClick={handleClickMenu}
               />
             </Col>
-            <Col span={4}>
-              <Button
-                size="large"
-                style={{
-                  border: '1px solid',
-                  borderRadius: '8px solid',
-                  backgroundColor: '#E8CA2B',
-                  marginLeft: '32px',
-                }}
-                onClick={handleChangePagePost}
-              >
-                <CalendarOutlined />
-                ĐĂNG TIN
-              </Button>
+            <Col
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {idUser ? (
+                <Button
+                  className={style.logoutButton}
+                  onClick={handleLogout}
+                  style={{ backgroundColor: '#FF5757' }}
+                >
+                  Đăng xuất
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    className={style.loginButton}
+                    onClick={handleLogin}
+                    style={{ backgroundColor: '#2F80ED' }}
+                  >
+                    Đăng nhập
+                  </Button>
+                </>
+              )}
             </Col>
           </Row>
-        </Col>
-      </Row>
+        </Drawer>
+      </Col>
+
+      <div className={style.headerSecond}>
+        <div className={style.search}>
+          <TreeSelect
+            showSearch
+            style={{
+              width: '100%',
+              border: '1px solid',
+              borderRadius: '9px',
+            }}
+            value={value}
+            placeholder="Tìm kiếm trên TicketSwap"
+            allowClear
+            treeDefaultExpandAll
+            onChange={onChange}
+            treeData={treeData}
+            size="large"
+          />
+        </div>
+        <div className={style.buttonPost}>
+          <Button
+            size="large"
+            style={{
+              border: '1px solid',
+              borderRadius: '8px solid',
+              backgroundColor: '#E8CA2B',
+            }}
+            onClick={handleChangePagePost}
+          >
+            <CalendarOutlined />
+            <div className={style.nameButton}>ĐĂNG TIN</div>
+          </Button>
+        </div>
+      </div>
     </Header>
   );
 };

@@ -1,6 +1,129 @@
 @import '@/styles/color.scss';
+@import '@/styles/mixin.scss';
 
 .appHeader {
-  background-color: #E8CA2B;
+  background-color: #e8ca2b;
   height: 100%;
+  position: sticky;
+  z-index: 9; //fixed_level 1
+  top: 0;
+  padding: 0 24px;
+  align-items: center;
+  justify-content: space-between;
+  .headerFirst {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .logo {
+      display: inline-block;
+      max-width: 75px;
+    }
+    .menu {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .menuButton {
+      width: 53px;
+      height: 53px;
+      display: flex;
+      margin-left: auto;
+      margin-right: 0;
+      cursor: pointer;
+    }
+    .menuButton svg {
+      width: 53px;
+      height: 40px;
+    }
+    .mobileMenuWrapper {
+      .mobileMenuTitle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        color: var(--on_secondary_darken_1);
+      }
+      :global {
+        .ant-drawer-header {
+          border-bottom: 1px solid $WHITE;
+        }
+        .ant-drawer-wrapper-body {
+          background: var(--secondary_darken_1);
+        }
+      }
+      .mobileMenu {
+        font-size: 18px;
+        line-height: 24px;
+        color: var(--on_secondary_darken_1);
+        background: transparent;
+        :global {
+          .ant-menu-item.ant-menu-item-active:active,
+          .ant-menu-item-selected {
+            background-color: transparent;
+            color: var(--on_secondary_darken_1);
+          }
+        }
+      }
+      .loginButton {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      .registerButton {
+        font-weight: 700;
+        color: var(--on_secondary_darken_1);
+        &:hover {
+          color: var(--on_secondary_darken_1);
+        }
+      }
+      .logoutButton {
+        width: 100%;
+      }
+      .userMenuItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--on_secondary_darken_1);
+      }
+    }
+  }
+  .headerSecond {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .search {
+      display: inline-block;
+      width: 100%;
+      margin-right: 12px;
+    }
+    .buttonPost {
+      display: inline-block;
+      .nameButton {
+        display: none;
+      }
+    }
+  }
+}
+@include desktop-device {
+  .appHeader {
+    .headerFirst {
+      .menu {
+        display: flex;
+      }
+      .menuButton {
+        display: none;
+      }
+    }
+    .headerSecond {
+      display: flex;
+      .buttonPost {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .nameButton {
+          display: inline-block;
+          margin-left: 8px
+        }
+      }
+    }
+  }
 }
