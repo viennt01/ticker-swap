@@ -53,7 +53,13 @@ export default function ORDER() {
   return (
     <>
       {/* {contextHolder} */}
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        scroll={{
+          x: 'max-content',
+        }}
+      />
     </>
   );
 }

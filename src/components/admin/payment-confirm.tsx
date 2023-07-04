@@ -116,7 +116,13 @@ export default function CONFIRM_PAYMENT() {
   return (
     <>
       {contextHolder}
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        scroll={{
+          x: 'max-content',
+        }}
+      />
     </>
   );
 }

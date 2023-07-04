@@ -209,70 +209,88 @@ export default function TickerFilmPage() {
       <Row style={{ marginBottom: '24px' }}>
         <Col span={24}>
           <Card>
-            <Button style={{ marginRight: '16px' }}>
-              <FilterOutlined />
-              Lọc
-            </Button>
-            <Select
-              defaultValue="HCM"
-              style={{ width: 220, marginRight: '16px' }}
-              onChange={handleChange}
-              options={[
-                {
-                  value: 'HCM',
-                  label: (
-                    <>
-                      <EnvironmentOutlined style={{ marginRight: '8px' }} />
-                      Thành phố Hồ Chí Minh
-                    </>
-                  ),
-                },
-                {
-                  value: 'DN',
-                  label: (
-                    <>
-                      <EnvironmentOutlined style={{ marginRight: '8px' }} />
-                      Thành phố Đà Nẵng
-                    </>
-                  ),
-                },
-                {
-                  value: 'HN',
-                  label: (
-                    <>
-                      <EnvironmentOutlined style={{ marginRight: '8px' }} />
-                      Thủ đô Hà Nội
-                    </>
-                  ),
-                },
-              ]}
-            />
-            <Select
-              defaultValue="vxp"
-              style={{ width: 220, marginRight: '16px' }}
-              onChange={handleChange}
-              options={[
-                {
-                  value: 'vxp',
-                  label: <>Vé xem phim</>,
-                },
-                {
-                  value: 'vtt',
-                  label: <>Vé thể thao</>,
-                },
-                {
-                  value: 'vdl',
-                  label: <>Vé phương tiện đi lại</>,
-                },
-                {
-                  value: 'vcl',
-                  label: <>Vé xem Concert/LiveShow</>,
-                },
-              ]}
-            />
-            <Button style={{ marginRight: '16px' }} onClick={showModal}>
-              Giá +
-            </Button>
+            <Row>
+              <Col>
+                <Button style={{ marginRight: '16px', marginBottom: '16px' }}>
+                  <FilterOutlined />
+                  Lọc
+                </Button>
+              </Col>
+              <Col>
+                <Select
+                  defaultValue="HCM"
+                  style={{
+                    width: 220,
+                    marginRight: '16px',
+                    marginBottom: '16px',
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: 'HCM',
+                      label: (
+                        <>
+                          <EnvironmentOutlined style={{ marginRight: '8px' }} />
+                          Thành phố Hồ Chí Minh
+                        </>
+                      ),
+                    },
+                    {
+                      value: 'DN',
+                      label: (
+                        <>
+                          <EnvironmentOutlined style={{ marginRight: '8px' }} />
+                          Thành phố Đà Nẵng
+                        </>
+                      ),
+                    },
+                    {
+                      value: 'HN',
+                      label: (
+                        <>
+                          <EnvironmentOutlined style={{ marginRight: '8px' }} />
+                          Thủ đô Hà Nội
+                        </>
+                      ),
+                    },
+                  ]}
+                />
+              </Col>
+              <Col>
+                <Select
+                  defaultValue="vxp"
+                  style={{
+                    width: 220,
+                    marginRight: '16px',
+                    marginBottom: '16px',
+                  }}
+                  onChange={handleChange}
+                  options={[
+                    {
+                      value: 'vxp',
+                      label: <>Vé xem phim</>,
+                    },
+                    {
+                      value: 'vtt',
+                      label: <>Vé thể thao</>,
+                    },
+                    {
+                      value: 'vdl',
+                      label: <>Vé phương tiện đi lại</>,
+                    },
+                    {
+                      value: 'vcl',
+                      label: <>Vé xem Concert/LiveShow</>,
+                    },
+                  ]}
+                />
+              </Col>
+              <Col>
+                <Button style={{ marginRight: '16px' }} onClick={showModal}>
+                  Giá +
+                </Button>
+              </Col>
+            </Row>
           </Card>
         </Col>
       </Row>

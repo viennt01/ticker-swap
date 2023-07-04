@@ -73,7 +73,13 @@ export default function ALL_PAYMENT() {
   return (
     <>
       {/* {contextHolder} */}
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        scroll={{
+          x: 'max-content',
+        }}
+      />
     </>
   );
 }
