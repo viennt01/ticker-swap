@@ -118,7 +118,7 @@ export default function PostTicketPage() {
   return (
     <>
       {contextHolder}
-      <Row>
+      <Row gutter={16}>
         <Col span={24} style={{ marginBottom: '8px' }}>
           <Breadcrumb
             separator="->"
@@ -139,7 +139,7 @@ export default function PostTicketPage() {
         </Col>
         <Col span={24} style={{ marginBottom: '8px' }}>
           <Card>
-            <Row>
+            <Row gutter={24}>
               <Col span={8}>
                 <Row>
                   <Col span={24} style={{ marginBottom: '16px' }}>
@@ -199,8 +199,8 @@ export default function PostTicketPage() {
                   >
                     <Input size="large" placeholder="Mã check in" />
                   </Form.Item>
-                  <Row>
-                    <Col span={6}>
+                  <Row gutter={24}>
+                    <Col span={24} lg={6}>
                       <Form.Item
                         name={['ticket', 'Quantity']}
                         rules={[
@@ -213,12 +213,12 @@ export default function PostTicketPage() {
                         <InputNumber
                           size="large"
                           placeholder="Số lượng vé"
-                          style={{ width: '110px' }}
+                          style={{ width: '100%' }}
                           min={1}
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={24} lg={6}>
                       <Form.Item
                         name={['ticket', 'Price']}
                         rules={[
@@ -231,7 +231,7 @@ export default function PostTicketPage() {
                         <InputNumber
                           size="large"
                           placeholder="Gía vé"
-                          style={{ width: '110px' }}
+                          style={{ width: '100%' }}
                           min={0}
                           formatter={(value) =>
                             `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -239,7 +239,7 @@ export default function PostTicketPage() {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col span={24} lg={12}>
                       <Form.Item
                         name={['ticket', 'AddressBuy']}
                         rules={[
@@ -255,6 +255,7 @@ export default function PostTicketPage() {
                   </Row>
                   <Form.Item
                     name={['ticket', 'TimeUse']}
+                    style={{ width: '100%' }}
                     rules={[
                       {
                         required: true,
@@ -262,7 +263,7 @@ export default function PostTicketPage() {
                       },
                     ]}
                   >
-                    <DatePicker showTime placeholder="Thời gian" />
+                    <DatePicker size="large" showTime placeholder="Thời gian" />
                   </Form.Item>
                   <Form.Item name={['ticket', 'Description']}>
                     <Input.TextArea
@@ -276,21 +277,27 @@ export default function PostTicketPage() {
                     Về người bán
                   </Title>
                   <Text>Bạn là</Text>
-                  <Row style={{ margin: '8px 0 16px 0' }}>
-                    <Col span={3}>
+                  <Row gutter={24} style={{ margin: '16px 0', width: '100%' }}>
+                    <Col
+                      span={24}
+                      lg={12}
+                      style={{ marginBottom: '16px ', width: '100%' }}
+                    >
                       <Button
                         style={{
                           backgroundColor: isPersonal ? '#E8B32B' : '#D9D9D9',
+                          width: '100%',
                         }}
                         onClick={() => handleCheckPersonal(true)}
                       >
                         Cá nhân
                       </Button>
                     </Col>
-                    <Col span={4}>
+                    <Col span={24} lg={12}>
                       <Button
                         style={{
                           backgroundColor: isPersonal ? '#D9D9D9' : '#E8B32B',
+                          width: '100%',
                         }}
                         onClick={() => handleCheckPersonal(false)}
                       >
