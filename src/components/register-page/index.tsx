@@ -18,6 +18,8 @@ import {
 } from '@ant-design/icons';
 import { LoginData, login } from './fetcher';
 import { useEffect, useState } from 'react';
+import style from './index.module.scss';
+
 const initialValues = {
   userName: '',
   password: '',
@@ -111,7 +113,7 @@ export default function RegisterPage() {
   return (
     <>
       {contextHolder}
-      <Row>
+      <Row className={style.wrapper}>
         <Col span={24} style={{ marginBottom: '24px' }}>
           <Breadcrumb
             separator="->"
@@ -125,10 +127,14 @@ export default function RegisterPage() {
             ]}
           />
         </Col>
-        <Col span={24} style={{ display: 'flex', justifyContent: 'center' }}>
+        <Col
+          span={24}
+          className={style.formLogin}
+          style={{ display: 'flex', justifyContent: 'center' }}
+        >
           <Card style={{ height: '900px', width: '545px' }}>
             <Row style={{ marginBottom: '24px' }}>
-              <Col span={16}>
+              <Col xs={12} sm={12} md={16} lg={16} span={16}>
                 <Row>
                   <Col span={24}>
                     <Title level={3}>Đăng ký</Title>
@@ -138,7 +144,7 @@ export default function RegisterPage() {
                   </Col>
                 </Row>
               </Col>
-              <Col span={8}>
+              <Col xs={12} sm={12} md={8} lg={8} span={8}>
                 <Title italic level={3}>
                   TicketSwap
                 </Title>
@@ -281,16 +287,7 @@ export default function RegisterPage() {
               </Col>
             </Row>
             <Row>
-              <Col
-                span={24}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: '16px',
-                  // padding: '0px 16px',
-                }}
-              >
+              <Col className={style.policy} span={24}>
                 Bằng việc Đăng ký, bạn đã đồng ý
                 <Link
                   href="https://ant.design"

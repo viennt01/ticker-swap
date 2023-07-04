@@ -1,0 +1,25 @@
+@import '@/styles/color.scss';
+@import '@/styles/mixin.scss';
+
+.wrapper {
+  .formLogin {
+    .policy {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+  }
+}
+@include desktop-device {
+  .wrapper {
+    .formLogin {
+      .policy {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+    }
+  }
+}

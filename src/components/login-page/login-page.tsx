@@ -106,7 +106,7 @@ export default function LoginPage() {
         >
           <Card style={{ height: '580px', width: '545px' }}>
             <Row className={style.header}>
-              <Col span={24} className={style.headerLeft}>
+              <Col xs={12} sm={12} md={16} lg={16} span={16}>
                 <Row>
                   <Col span={24} className={style.title}>
                     <Title level={3}>Đăng nhập</Title>
@@ -116,7 +116,7 @@ export default function LoginPage() {
                   </Col>
                 </Row>
               </Col>
-              <Col span={24} className={style.headerRight}>
+              <Col xs={12} sm={12} md={8} lg={8} span={8}>
                 <Title italic level={3}>
                   TicketSwap
                 </Title>
