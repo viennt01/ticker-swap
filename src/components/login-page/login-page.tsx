@@ -33,22 +33,22 @@ export default function LoginPage() {
   const { Text, Title, Link } = Typography;
 
   const onFinish = (values: LoginData) => {
-    // appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, '123');
-    // router.push('/');
-    // return;
     setIsLoading(true);
     const data = {
       userName: values.userName,
       password: values.password,
     };
-    console.log(data);
-
     login(data)
       .then((res) => {
         if (res.message === 'Thành Công') {
           console.log(res);
           appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.roleId);
           appLocalStorage.set(LOCAL_STORAGE_KEYS.USER_ID, res.data.id);
+          if (res.data.roleId === 1) {
+            router.push('/admin');
+            setIsLoading(false);
+            return;
+          }
           router.push(ROUTERS.HOME);
           setIsLoading(false);
           return;

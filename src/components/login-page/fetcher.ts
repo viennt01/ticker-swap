@@ -6,7 +6,7 @@ export interface LoginData {
   password: string;
 }
 export interface DataLogin {
-  roleId: string;
+  roleId: any;
   id: string;
   status: boolean;
   message: string;

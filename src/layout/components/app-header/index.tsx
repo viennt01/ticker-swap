@@ -76,6 +76,7 @@ const AppHeader = () => {
     // fetchDataListTicket();
   }, [idUser, router]);
   const handleLogout = () => {
+    setShowMobileMenu(false);
     localStorage.clear();
     router.push('/login');
   };
