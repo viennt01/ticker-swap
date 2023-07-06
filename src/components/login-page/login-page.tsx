@@ -136,13 +136,13 @@ export default function LoginPage() {
                     rules={[
                       {
                         required: true,
-                        message: 'Please input your userName!',
+                        message: 'Vui lòng nhập tên đăng nhập của bạn!',
                       },
                     ]}
                   >
                     <Input
                       size="large"
-                      placeholder="Nhập số điện thoại của bạn"
+                      placeholder="Nhập tên đăng nhập của bạn"
                     />
                   </Form.Item>
 
@@ -151,7 +151,7 @@ export default function LoginPage() {
                     rules={[
                       {
                         required: true,
-                        message: 'Please input your password!',
+                        message: 'Vui lòng Nhập mật khẩu của bạn!',
                       },
                     ]}
                   >
