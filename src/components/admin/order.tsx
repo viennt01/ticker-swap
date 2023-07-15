@@ -38,7 +38,6 @@ export default function ORDER() {
   const fetchDataListTicket = () => {
     getListTicket()
       .then((res) => {
-        console.log(res);
         setData(res.data);
         // setLoading(false);
       })

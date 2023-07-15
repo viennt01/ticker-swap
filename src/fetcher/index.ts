@@ -122,8 +122,6 @@ export const postLogin =
 export const postNoHeader =
   <T, R>({ data, options, gw, timeout }: CRUDProps<T>) =>
   (url: string): Promise<R> => {
-    console.log(data);
-
     const fetchPromise = requestWithTimeout(
       fetch(`${getGateway(gw)}${url}`, {
         // headers: {

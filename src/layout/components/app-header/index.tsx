@@ -17,13 +17,13 @@ import {
   ContainerOutlined,
   UserOutlined,
   ShoppingCartOutlined,
-  BellOutlined,
   CalendarOutlined,
   LogoutOutlined,
   LoginOutlined,
   ContactsOutlined,
   DesktopOutlined,
   MenuFoldOutlined,
+  CreditCardOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useRouter } from 'next/router';
@@ -61,7 +61,6 @@ const AppHeader = () => {
   const fetchDataListTicket = () => {
     getListTicket()
       .then((res) => {
-        console.log(res);
         setData(res.data);
       })
       .catch((err) => {
@@ -319,9 +318,10 @@ const AppHeader = () => {
                         backgroundColor: '#E8CA2B',
                         border: 'none',
                       }}
+                      onClick={() => router.push('/draw-money-payments')}
                     >
-                      <BellOutlined />
-                      Thông báo
+                      <CreditCardOutlined />
+                      Rút tiền
                     </Button>
                   </div>
                 ) : (

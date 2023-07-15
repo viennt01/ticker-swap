@@ -82,7 +82,6 @@ export default function DetailTickerFilmPage() {
       ticketId: id,
       userId: Number(idUser),
     };
-    console.log(data);
 
     buyTicket(data)
       .then((res) => {

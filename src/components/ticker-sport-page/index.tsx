@@ -52,7 +52,6 @@ export default function TicketSportPage() {
   };
 
   const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
     switch (value) {
       case 'vxp':
         router.push('/ticker-film');

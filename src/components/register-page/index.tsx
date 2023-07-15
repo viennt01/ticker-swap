@@ -102,13 +102,6 @@ export default function RegisterPage() {
   useEffect(() => {
     listBank();
   }, []);
-  console.log(
-    'dataBank',
-    dataBank.map((c: any) => ({
-      value: c.shortName,
-      label: c.shortName,
-    }))
-  );
 
   return (
     <>

@@ -30,6 +30,7 @@ export const API_ORDER = {
 
 export const API_PAYMENT = {
   REQUEST_PAYMENT: '/Payments/RequestPayment',
+  REQUEST_DRAW_MONEY_PAYMENT: '/Payments/RequestwithDrawMoneyPayment',
   ALL_PAYMENT: '/Payments/GetAll',
   CONFIRM_PAYMENT: '/Payments/GetAllNeedToConfirm',
   CONFIRM_PAYMENT_HANDLE: '/Payments/ConfirmPayment',

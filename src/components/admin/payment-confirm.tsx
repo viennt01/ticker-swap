@@ -51,10 +51,10 @@ export default function CONFIRM_PAYMENT() {
       key: 'status',
       align: 'center',
       render: (value) =>
-        value === 'Chờ xử lí' ? (
-          <Tag color="warning">{value}</Tag>
-        ) : (
+        value === 'Đã thanh Toán' ? (
           <Tag color="#87d068">{value}</Tag>
+        ) : (
+          <Tag color="warning">{value}</Tag>
         ),
     },
     {

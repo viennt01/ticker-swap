@@ -47,10 +47,10 @@ export default function ALL_PAYMENT() {
       key: 'status',
       align: 'center',
       render: (value) =>
-        value === 'Chờ xử lí' ? (
-          <Tag color="warning">{value}</Tag>
-        ) : (
+        value !== 'Chờ xử lí(Nộp Tiền)' && value !== 'Chờ xử lí(Rút Tiền)' ? (
           <Tag color="#87d068">{value}</Tag>
+        ) : (
+          <Tag color="warning">{value}</Tag>
         ),
     },
   ];
@@ -58,7 +58,6 @@ export default function ALL_PAYMENT() {
   const fetchDataListTicket = () => {
     getListPaymentAll()
       .then((res) => {
-        console.log(res);
         setData(res.data);
         // setLoading(false);
       })
