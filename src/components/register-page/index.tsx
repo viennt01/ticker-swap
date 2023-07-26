@@ -161,10 +161,7 @@ export default function RegisterPage() {
                       },
                     ]}
                   >
-                    <Input
-                      size="large"
-                      placeholder="Nhập số họ và tên của bạn"
-                    />
+                    <Input size="large" placeholder="Nhập họ và tên của bạn" />
                   </Form.Item>
 
                   <Form.Item
