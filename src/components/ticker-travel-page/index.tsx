@@ -167,7 +167,7 @@ export default function TicketTravelPage() {
   };
   const fetchData = () => {
     const data = {
-      id: 1,
+      id: 3,
     };
     login(data)
       .then((res) => {
